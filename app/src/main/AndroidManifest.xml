@@ -13,7 +13,16 @@
         android:theme="@style/Theme.Kaloriku"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.auth.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
