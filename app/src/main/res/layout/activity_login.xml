@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="30dp"
     tools:context=".ui.auth.LoginActivity">
@@ -50,8 +51,25 @@
             android:inputType="textEmailAddress"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordEditTextLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:endIconMode="password_toggle"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/btnSignUpWithEmail"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_up_with_email"
@@ -68,21 +86,21 @@
         android:layout_marginTop="16dp"/>
 
     <Button
-        android:id="@+id/btnLoginWithEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login_with_email"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/whitegrey"
-        android:layout_marginTop="16dp"/>
-
-    <Button
         android:id="@+id/btnLoginWithGoogle"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/google"
         android:textColor="@color/black"
         android:backgroundTint="@color/whitegrey"
         android:layout_marginTop="8dp"/>
+
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible" />
 
 </LinearLayout>
