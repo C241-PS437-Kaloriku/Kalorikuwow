@@ -1,7 +1,6 @@
 package com.dicoding.kaloriku.data
 
 import com.google.gson.annotations.SerializedName
-import java.util.Date
 
 data class LoginResponse(
 
