@@ -21,6 +21,7 @@ import com.dicoding.kaloriku.databinding.ActivityRegisterBinding
 import com.dicoding.kaloriku.ui.auth.viewmodel.RegisterViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class RegisterActivity : AppCompatActivity() {
@@ -143,7 +144,11 @@ class RegisterActivity : AppCompatActivity() {
         binding.btnSignUp.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            val birthdate = binding.birthdateEditText.text.toString()
+            val birthdateString = binding.birthdateEditText.text.toString()
+
+            // Convert birthdate String to Date
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd") // Adjust the date format as per your input format
+            val birthdate: Date = dateFormatter.parse(birthdateString)
 
             binding.loadingProgressBar.visibility = View.VISIBLE
 
@@ -154,13 +159,15 @@ class RegisterActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.registerResult.observe(this) { response ->
             binding.loadingProgressBar.visibility = View.INVISIBLE
-            if (response != null && response.message == null) {
+            if (response != null) { // Check if response is not null
                 showRegisterSuccessDialog(response)
             } else {
-                showErrorDialog(response?.message ?: "Gagal melakukan registrasi")
+                showErrorDialog("Gagal melakukan registrasi")
             }
         }
     }
+
+
 
     private fun showRegisterSuccessDialog(response: RegisterResponse) {
         AlertDialog.Builder(this).apply {

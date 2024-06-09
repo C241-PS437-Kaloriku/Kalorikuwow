@@ -1,6 +1,7 @@
 package com.dicoding.kaloriku.data
 
 import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 data class LoginResponse(
 
@@ -16,6 +17,16 @@ data class LoginResponse(
 	@field:SerializedName("token")
 	val token: String? = null
 )
+
+data class LoginRequest(
+
+	@SerializedName("email")
+	val email: String,
+
+	@SerializedName("password")
+	val password: String
+)
+
 
 data class User(
 
