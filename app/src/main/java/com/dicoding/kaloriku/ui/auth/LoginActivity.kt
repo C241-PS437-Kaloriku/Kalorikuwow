@@ -105,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.loginResult.observe(this) { response ->
             binding.loadingProgressBar.visibility = View.INVISIBLE
-            if (response != null && response.error == false) {
+            if (response != null) {
                 showLoginSuccessDialog(response)
             } else {
                 showErrorDialog()
