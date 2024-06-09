@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private val viewModel: RegisterViewModel by viewModels()
     private lateinit var binding: ActivityRegisterBinding
-    private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +100,7 @@ class RegisterActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val birthdate = s.toString()
                 if (!isValidBirthdate(birthdate)) {
-                    binding.birthdateEditTextLayout.error = "Format tanggal tidak valid, contoh: 31-12-2023"
+                    binding.birthdateEditTextLayout.error = "Format tanggal tidak valid, contoh: 2023-12-21"
                 } else {
                     binding.birthdateEditTextLayout.isErrorEnabled = false
                 }
@@ -135,7 +135,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun isValidBirthdate(birthdate: String): Boolean {
-        val birthdatePattern = "\\d{2}-\\d{2}-\\d{4}" // Example: 31-12-2023
+        val birthdatePattern = "\\d{4}-\\d{2}-\\d{2}" // Example: 2023-12-31
         return birthdate.matches(Regex(birthdatePattern))
     }
 
@@ -154,10 +154,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.registerResult.observe(this) { response ->
             binding.loadingProgressBar.visibility = View.INVISIBLE
-            if (response != null && response.error == false) {
+            if (response != null && response.message == null) {
                 showRegisterSuccessDialog(response)
             } else {
-                showErrorDialog()
+                showErrorDialog(response?.message ?: "Gagal melakukan registrasi")
             }
         }
     }
@@ -174,10 +174,10 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun showErrorDialog() {
+    private fun showErrorDialog(message: String) {
         AlertDialog.Builder(this).apply {
             setTitle("Gagal Melakukan Registrasi")
-            setMessage("Tolong masukkan email dan password dengan benar !")
+            setMessage(message)
             setPositiveButton("Kembali") { _, _ -> }
             create()
             show()

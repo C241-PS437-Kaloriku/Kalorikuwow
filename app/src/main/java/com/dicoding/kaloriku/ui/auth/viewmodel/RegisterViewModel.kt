@@ -24,11 +24,12 @@ class RegisterViewModel : ViewModel() {
                         409 -> "Email sudah dipakai, silahkan gunakan email lain"
                         else -> "Gagal melakukan registrasi"
                     }
-                    _registerResult.value = RegisterResponse(error = true, message = errorMessage)
+                    _registerResult.value = RegisterResponse(message = errorMessage)
                 }
             }
+
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                _registerResult.value = null
+                _registerResult.value = RegisterResponse(message = t.message)
             }
         })
     }
