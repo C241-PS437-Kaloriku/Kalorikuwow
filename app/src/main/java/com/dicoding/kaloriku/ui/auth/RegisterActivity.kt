@@ -154,6 +154,10 @@ class RegisterActivity : AppCompatActivity() {
 
             viewModel.register(email, password, birthdate)
         }
+        binding.tvLoginHere.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun observeViewModel() {

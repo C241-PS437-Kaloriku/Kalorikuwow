@@ -9,22 +9,33 @@
     android:id="@+id/WelcomeActivity"
     tools:context=".ui.auth.WelcomeActivity">
 
+
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_back"
-        android:textSize="30sp"
+        android:text="Welcome Back"
+        android:textSize="26sp"
         android:layout_gravity="center"
-        android:textStyle="bold"
-        android:layout_marginTop="50dp"/>
+        android:fontFamily="@font/inter_bold"
+        android:layout_marginTop="90dp"/>
+
+    <TextView
+        android:id="@+id/tvEnterEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:text="Login to your account"
+        android:fontFamily="@font/inter"
+        android:textSize="13sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailEditTextLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/ic_baseline_email_24"
+        app:startIconDrawable="@drawable/mail"
         android:layout_marginTop="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -42,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconMode="password_toggle"
-        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        app:startIconDrawable="@drawable/lock"
         android:layout_marginTop="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -56,11 +67,13 @@
 
     <Button
         android:id="@+id/btnLogin"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:backgroundTint="@color/purple"
         android:textColor="@android:color/white"
+        android:fontFamily="@font/inter_bold"
         android:layout_marginTop="16dp"/>
 
     <TextView
@@ -69,6 +82,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dont_have_an_account"
         android:layout_gravity="center"
+        android:fontFamily="@font/inter"
         android:layout_marginTop="16dp"/>
 
     <TextView
@@ -78,6 +92,18 @@
         android:text="@string/register_here"
         android:layout_gravity="center"
         android:textStyle="bold"
-        android:layout_marginTop="8dp"/>
+        android:fontFamily="@font/inter_bold"
+        android:layout_marginTop="0dp"/>
+
+    <ImageView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/logo"
+        android:textSize="35sp"
+        android:layout_weight="1"
+        android:textStyle="bold" />
 
 </LinearLayout>
