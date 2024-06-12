@@ -23,11 +23,10 @@ class PhysicalDataViewModel(private val repository: UserRepository) : ViewModel(
     fun getTokenAndUpdatePhysicalData(request: UpdatePhysicalRequest) {
         viewModelScope.launch {
             val token = repository.getToken().first()
-            val userId = repository.getUserId().first() // Pastikan ada metode ini di UserRepository
+            val userId = repository.getUserId().first()
             Log.d("PhysicalDataViewModel", "Token retrieved from repository: $token")
             Log.d("PhysicalDataViewModel", "UserId retrieved from repository: $userId")
 
-            // Tambahkan userId ke request
             val updatedRequest = request.copy(userId = userId)
             updatePhysicalData(token, updatedRequest)
         }

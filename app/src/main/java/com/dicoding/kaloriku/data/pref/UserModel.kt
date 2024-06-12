@@ -6,6 +6,3 @@ data class UserModel(
     val isLogin: Boolean,
     val userId: String
 )
-
-
-

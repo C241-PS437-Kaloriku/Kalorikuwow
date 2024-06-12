@@ -34,6 +34,9 @@ class UserRepository private constructor(
     suspend fun logout() {
         userPreference.logout()
     }
+    suspend fun hasPhysicalData(): Boolean {
+        return userPreference.hasPhysicalData()
+    }
 
     companion object {
         @Volatile

@@ -13,7 +13,6 @@ import com.dicoding.kaloriku.R
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.databinding.ActivityPhysicalDataBinding
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class PhysicalDataActivity : AppCompatActivity() {
@@ -138,10 +137,9 @@ class PhysicalDataActivity : AppCompatActivity() {
                     "Physical Data updated: ${response.message}",
                     Toast.LENGTH_SHORT
                 ).show()
-                // Pindah ke MainActivity setelah data diperbarui
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                finish() // Menutup activity saat ini
+                finish()
             }.onFailure { throwable ->
                 Toast.makeText(
                     this,

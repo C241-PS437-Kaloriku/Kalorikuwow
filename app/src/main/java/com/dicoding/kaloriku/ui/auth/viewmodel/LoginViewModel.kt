@@ -50,7 +50,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         })
     }
 
-
     fun saveSession(user: UserModel) {
         viewModelScope.launch {
             repository.saveSession(user)
@@ -63,9 +62,11 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
-    fun hasPhysicalData(): Boolean {
-        // Implement logic to check if physical data is present
-        return false
+    fun hasPhysicalData(): LiveData<Boolean> {
+        val hasData = MutableLiveData<Boolean>()
+        viewModelScope.launch {
+            hasData.value = repository.hasPhysicalData()
+        }
+        return hasData
     }
 }
-

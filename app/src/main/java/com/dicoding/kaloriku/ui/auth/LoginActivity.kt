@@ -129,22 +129,21 @@ class LoginActivity : AppCompatActivity() {
 
                 viewModel.saveSession(userModel)
 
-                if (viewModel.hasPhysicalData()) {
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                viewModel.hasPhysicalData().observe(this@LoginActivity) { hasData ->
+                    val intent = if (hasData) {
+                        Intent(this@LoginActivity, MainActivity::class.java)
+                    } else {
+                        Intent(this@LoginActivity, PhysicalDataActivity::class.java)
+                    }
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
-                } else {
-                    val intent = Intent(this@LoginActivity, PhysicalDataActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
+                    finish()
                 }
-                finish()
             }
             create()
             show()
         }
     }
-
 
     private fun showErrorDialog() {
         AlertDialog.Builder(this).apply {
