@@ -9,9 +9,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.kaloriku.databinding.ActivityMainBinding
 import com.dicoding.kaloriku.ui.auth.LoginActivity
+import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+    private val bmiViewModel by viewModels<BMIViewModel> {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var binding: ActivityMainBinding
@@ -25,6 +29,16 @@ class MainActivity : AppCompatActivity() {
             if (!user.isLogin) {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
+            }
+
+            bmiViewModel.calculateBMI(user.userId)
+        }
+
+        bmiViewModel.bmiResult.observe(this) { bmiResponse ->
+            bmiResponse?.let {
+                val bmiText = "BMI: ${bmiResponse.bmi}\nCategory: ${bmiResponse.category}"
+                binding.bmiTextView.text = bmiResponse.bmi
+                binding.categoryTextView.text = bmiResponse.category // Update categoryTextView
             }
         }
 

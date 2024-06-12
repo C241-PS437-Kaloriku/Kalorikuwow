@@ -5,10 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.kaloriku.data.di.Injection
 import com.dicoding.kaloriku.data.pref.UserRepository
+import com.dicoding.kaloriku.data.retrofit.ApiConfig
+import com.dicoding.kaloriku.data.retrofit.ApiService
+import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
 import com.dicoding.kaloriku.ui.auth.viewmodel.LoginViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
+    private val apiService: ApiService
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -23,6 +27,9 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(PhysicalDataViewModel::class.java) -> {
                 PhysicalDataViewModel(userRepository) as T
             }
+            modelClass.isAssignableFrom(BMIViewModel::class.java) -> {
+                BMIViewModel(userRepository) as T // Pass apiService here
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -34,7 +41,10 @@ class ViewModelFactory(
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideUserRepository(context))
+                    INSTANCE = ViewModelFactory(
+                        Injection.provideUserRepository(context),
+                        ApiConfig.getApiService() // Pass ApiService here
+                    )
                 }
             }
             return INSTANCE as ViewModelFactory
