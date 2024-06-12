@@ -80,7 +80,7 @@
             android:layout_height="34dp"
             android:layout_gravity="center"
             android:fontFamily="@font/inter"
-            android:text="Kcal Left"
+            android:text="@string/kcal_left"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -112,7 +112,7 @@
             android:layout_width="108dp"
             android:layout_height="44dp"
             android:fontFamily="@font/inter_bold"
-            android:text="Kcal"
+            android:text="@string/kcal"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="35sp"
@@ -130,7 +130,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
             android:fontFamily="@font/inter"
-            android:text="Eaten"
+            android:text="@string/eaten"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -161,20 +161,19 @@
 
             <TextView
                 android:id="@+id/bmiTextView"
-                android:layout_width="44dp"
+                android:layout_width="74dp"
                 android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:fontFamily="@font/inter_bold"
                 android:text="222"
                 android:textColor="@color/white"
                 android:textSize="30sp"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.084"
+                app:layout_constraintHorizontal_bias="0.059"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.25" />
+                app:layout_constraintVertical_bias="0.219" />
 
             <TextView
                 android:id="@+id/bmistatus"
@@ -186,7 +185,6 @@
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/bmiTextView"
@@ -216,7 +214,7 @@
                 android:layout_height="33dp"
                 android:layout_gravity="center"
                 android:fontFamily="@font/inter"
-                android:text="Your Current BMI"
+                android:text="@string/your_current_bmi"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"

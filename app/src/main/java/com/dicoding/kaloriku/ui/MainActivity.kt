@@ -38,10 +38,9 @@ class MainActivity : AppCompatActivity() {
             bmiResponse?.let {
                 val bmiText = "BMI: ${bmiResponse.bmi}\nCategory: ${bmiResponse.category}"
                 binding.bmiTextView.text = bmiResponse.bmi
-                binding.categoryTextView.text = bmiResponse.category // Update categoryTextView
+                binding.categoryTextView.text = bmiResponse.category
             }
         }
-
         setupView()
         setupAction()
     }

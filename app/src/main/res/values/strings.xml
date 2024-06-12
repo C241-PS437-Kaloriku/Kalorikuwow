@@ -36,6 +36,10 @@
     <string name="login_to_your_account">Login to your account</string>
     <string name="kcal_left_number">2000</string>
     <string name="kcal_left_number2">20</string>
+    <string name="your_current_bmi">Your Current BMI</string>
+    <string name="kcal_left">Kcal Left</string>
+    <string name="kcal">Kcal</string>
+    <string name="eaten">Eaten</string>
     <string-array name="gender_options">
         <item>Male</item>
         <item>Female</item>

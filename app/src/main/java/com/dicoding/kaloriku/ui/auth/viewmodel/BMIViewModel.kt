@@ -8,14 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.data.response.BMIResponse
 import com.dicoding.kaloriku.data.retrofit.ApiConfig
-import com.dicoding.kaloriku.data.retrofit.ApiService
 import kotlinx.coroutines.launch
 
 
 
 class BMIViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private val apiService = ApiConfig.getApiService() // Access ApiService directly
+    private val apiService = ApiConfig.getApiService()
 
     private val _bmiResult = MutableLiveData<BMIResponse>()
     val bmiResult: LiveData<BMIResponse> = _bmiResult
@@ -25,7 +24,7 @@ class BMIViewModel(private val userRepository: UserRepository) : ViewModel() {
             try {
                 userRepository.getToken().collect { token ->
                     val response = apiService.calculateBMI(token, userId)
-                    println("$token")
+                    println(token)
                     if (response.isSuccessful) {
                         val bmiResponse = response.body()
                         bmiResponse?.let {
