@@ -23,6 +23,7 @@
     <string name="register_your_account">Register your account</string>
     <string name="birthdate">Birth Date</string>
     <string name="logout">Logout</string>
+    <string name="bmistatus">Normal</string>
     <string name="message_main_page">Welcome to Kaloriku</string>
     <string name="input_physical_data">Input Physical Data</string>
     <string name="please_input_your_physical_data">Please input your physical data</string>
@@ -30,9 +31,11 @@
     <string name="height">Height</string>
     <string name="gender">Gender</string>
     <string name="save">Save</string>
+    <string name="kgbmi">kg/m2</string>
     <string name="birthdate_yyyy_mm_dd">Birthdate (yyyy-mm-dd)</string>
     <string name="login_to_your_account">Login to your account</string>
     <string name="kcal_left_number">2000</string>
+    <string name="kcal_left_number2">20</string>
     <string-array name="gender_options">
         <item>Male</item>
         <item>Female</item>
