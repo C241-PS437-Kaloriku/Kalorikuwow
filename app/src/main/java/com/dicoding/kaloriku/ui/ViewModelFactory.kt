@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.kaloriku.data.di.Injection
-import com.dicoding.kaloriku.data.pref.UserPreference
 import com.dicoding.kaloriku.data.pref.UserRepository
-import com.dicoding.kaloriku.data.pref.dataStore
 import com.dicoding.kaloriku.ui.auth.viewmodel.LoginViewModel
 
 class ViewModelFactory(
@@ -21,6 +19,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(PhysicalDataViewModel::class.java) -> {
+                PhysicalDataViewModel(userRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

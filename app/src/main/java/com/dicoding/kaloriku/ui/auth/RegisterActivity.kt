@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.dicoding.kaloriku.R
-import com.dicoding.kaloriku.data.RegisterResponse
+import com.dicoding.kaloriku.data.response.RegisterResponse
 import com.dicoding.kaloriku.databinding.ActivityRegisterBinding
 import com.dicoding.kaloriku.ui.auth.viewmodel.RegisterViewModel
 import java.text.SimpleDateFormat
@@ -136,7 +136,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun isValidBirthdate(birthdate: String): Boolean {
-        val birthdatePattern = "\\d{4}-\\d{2}-\\d{2}" // Example: 2023-12-31
+        val birthdatePattern = "\\d{4}-\\d{2}-\\d{2}"
         return birthdate.matches(Regex(birthdatePattern))
     }
 
@@ -146,8 +146,7 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.passwordEditText.text.toString()
             val birthdateString = binding.birthdateEditText.text.toString()
 
-            // Convert birthdate String to Date
-            val dateFormatter = SimpleDateFormat("yyyy-MM-dd") // Adjust the date format as per your input format
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
             val birthdate: Date = dateFormatter.parse(birthdateString)
 
             binding.loadingProgressBar.visibility = View.VISIBLE
@@ -163,14 +162,13 @@ class RegisterActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.registerResult.observe(this) { response ->
             binding.loadingProgressBar.visibility = View.INVISIBLE
-            if (response != null) { // Check if response is not null
+            if (response != null) {
                 showRegisterSuccessDialog(response)
             } else {
                 showErrorDialog("Gagal melakukan registrasi")
             }
         }
     }
-
 
 
     private fun showRegisterSuccessDialog(response: RegisterResponse) {

@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.kaloriku.data.RegisterRequest
-import com.dicoding.kaloriku.data.RegisterResponse
+import com.dicoding.kaloriku.data.response.RegisterRequest
+import com.dicoding.kaloriku.data.response.RegisterResponse
 import com.dicoding.kaloriku.data.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback

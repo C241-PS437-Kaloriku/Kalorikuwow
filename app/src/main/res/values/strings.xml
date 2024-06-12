@@ -24,4 +24,15 @@
     <string name="birthdate">Birth Date</string>
     <string name="logout">Logout</string>
     <string name="message_main_page">Welcome to Kaloriku</string>
+    <string name="input_physical_data">Input Physical Data</string>
+    <string name="please_input_your_physical_data">Please input your physical data</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="gender">Gender</string>
+    <string name="save">Save</string>
+    <string name="birthdate_yyyy_mm_dd">Birthdate (yyyy-mm-dd)</string>
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

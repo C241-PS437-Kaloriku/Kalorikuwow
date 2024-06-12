@@ -5,16 +5,18 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.kaloriku.data.LoginResponse
+import com.dicoding.kaloriku.data.response.LoginResponse
 import com.dicoding.kaloriku.data.pref.UserModel
 import com.dicoding.kaloriku.databinding.ActivityLoginBinding
 import com.dicoding.kaloriku.ui.MainActivity
+import com.dicoding.kaloriku.ui.PhysicalDataActivity
 import com.dicoding.kaloriku.ui.ViewModelFactory
 import com.dicoding.kaloriku.ui.auth.viewmodel.LoginViewModel
 
@@ -118,19 +120,25 @@ class LoginActivity : AppCompatActivity() {
             setTitle("Berhasil")
             setMessage("Anda berhasil masuk ke aplikasi !")
             setPositiveButton("Masuk") { _, _ ->
-                // Save session and navigate to MainActivity
-                val userModel = response.user?.userId?.let { response.user?.password?.let { it1 ->
-                    UserModel(it,
-                        it1
-                    )
-                } }
-                if (userModel != null) {
-                    viewModel.saveSession(userModel)
+                val token = response.token ?: ""
+                val email = response.user?.email ?: ""
+                val userId = response.user?.userId ?: ""
+                Log.d("LoginActivity", "Token received from response: $token")
+                Log.d("LoginActivity", "UserId received from response: $userId")
+                val userModel = UserModel(email, token, isLogin = true, userId = userId)
+
+                viewModel.saveSession(userModel)
+
+                viewModel.hasPhysicalData().observe(this@LoginActivity) { hasData ->
+                    val intent = if (hasData) {
+                        Intent(this@LoginActivity, MainActivity::class.java)
+                    } else {
+                        Intent(this@LoginActivity, PhysicalDataActivity::class.java)
+                    }
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
                 }
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-                finish()
             }
             create()
             show()
