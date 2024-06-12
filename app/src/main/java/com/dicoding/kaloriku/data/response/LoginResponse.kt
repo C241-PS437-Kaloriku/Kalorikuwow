@@ -1,4 +1,4 @@
-package com.dicoding.kaloriku.data
+package com.dicoding.kaloriku.data.response
 
 import com.google.gson.annotations.SerializedName
 

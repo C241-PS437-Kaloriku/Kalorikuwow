@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Kaloriku"
         tools:targetApi="31">
         <activity
+            android:name=".ui.PhysicalDataActivity"
+            android:exported="false"/>
+        <activity
             android:name=".ui.auth.WelcomeActivity"
             android:exported="false" />
         <activity

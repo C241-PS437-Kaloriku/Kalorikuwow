@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.dicoding.kaloriku.R
-import com.dicoding.kaloriku.data.RegisterResponse
+import com.dicoding.kaloriku.data.response.RegisterResponse
 import com.dicoding.kaloriku.databinding.ActivityRegisterBinding
 import com.dicoding.kaloriku.ui.auth.viewmodel.RegisterViewModel
 import java.text.SimpleDateFormat
