@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Kaloriku</string>
     <string name="kaloriku">KALORIKU</string>
+    <string name="Loginsuruh">Login to Your cccount</string>
     <string name="create_an_account">Create an account</string>
     <string name="hint_email">email@domain.com</string>
     <string name="tv_enter_email">Enter your email to sign up for this app</string>
@@ -17,7 +18,7 @@
     <string name="login_here">Login here</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="register_here">Register here</string>
-    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="dont_have_an_account">Don\'t have an account yet?</string>
     <string name="login">Login</string>
     <string name="register_your_account">Register your account</string>
     <string name="birthdate">Birth Date</string>

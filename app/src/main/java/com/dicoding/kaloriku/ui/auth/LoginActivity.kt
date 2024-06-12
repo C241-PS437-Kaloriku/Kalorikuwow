@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
 
             viewModel.login(email, password)
         }
-        binding.tvSubtitle.setOnClickListener {
+        binding.tvRegisterHere.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }

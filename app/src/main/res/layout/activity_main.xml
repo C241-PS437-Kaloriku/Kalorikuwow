@@ -4,20 +4,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context="ui.MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="171dp"
+        android:layout_height="34dp"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.043" />
+
+    <ImageView
+        android:id="@+id/History"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/history"
+        app:layout_constraintBottom_toTopOf="@+id/poop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.441" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+<LinearLayout
+    android:id="@+id/poop"
+
+    android:layout_width="366dp"
+    android:layout_height="172dp"
+    android:layout_marginTop="36dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.488"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/logo"
+
+    android:background="@drawable/calories" >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="86dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="2000"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/kcal"
+            android:layout_width="84dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter"
+            android:text="Kcal Left"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="69dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageViewa"
+        android:layout_width="367dp"
+        android:layout_height="127dp"
+        android:layout_marginBottom="208dp"
+        android:src="@drawable/bmi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poop"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/logoutButton"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:backgroundTint="@color/purple"
         android:text="@string/logout"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewa"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
