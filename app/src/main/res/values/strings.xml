@@ -31,6 +31,8 @@
     <string name="gender">Gender</string>
     <string name="save">Save</string>
     <string name="birthdate_yyyy_mm_dd">Birthdate (yyyy-mm-dd)</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="kcal_left_number">2000</string>
     <string-array name="gender_options">
         <item>Male</item>
         <item>Female</item>

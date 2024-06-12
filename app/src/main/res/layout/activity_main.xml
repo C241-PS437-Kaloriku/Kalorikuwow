@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="30dp"
     tools:context="ui.MainActivity">
 
     <ImageView
@@ -44,16 +45,15 @@
 
 <LinearLayout
     android:id="@+id/poop"
-
-    android:layout_width="366dp"
-    android:layout_height="172dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginTop="36dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.488"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/logo"
-
     android:background="@drawable/calories" >
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -63,10 +63,10 @@
             android:layout_width="86dp"
             android:layout_height="36dp"
             android:layout_gravity="center"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="35dp"
             android:layout_marginTop="36dp"
             android:fontFamily="@font/inter_bold"
-            android:text="2000"
+            android:text="@string/kcal_left_number"
             android:textColor="@color/white"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,15 +82,20 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="18sp"
-            tools:layout_editor_absoluteX="36dp"
-            tools:layout_editor_absoluteY="69dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.131"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
 
     <ImageView
         android:id="@+id/imageViewa"
-        android:layout_width="367dp"
-        android:layout_height="127dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="208dp"
         android:src="@drawable/bmi"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,7 +106,8 @@
 
     <Button
         android:id="@+id/logoutButton"
-        android:layout_width="0dp"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/purple"
         android:text="@string/logout"

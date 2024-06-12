@@ -22,7 +22,7 @@
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome back"
+        android:text="@string/welcome_back"
         android:textSize="16sp"
         android:layout_gravity="center"
         android:fontFamily="@font/inter_semibold"
@@ -43,7 +43,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/mail"
+        app:startIconDrawable="@drawable/ic_baseline_email_24"
         android:layout_marginTop="16dp"
         app:startIconTint="@color/black">
 
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconMode="password_toggle"
-        app:startIconDrawable="@drawable/lock"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
         android:layout_marginTop="6dp"
         app:startIconTint="@color/black">
 
