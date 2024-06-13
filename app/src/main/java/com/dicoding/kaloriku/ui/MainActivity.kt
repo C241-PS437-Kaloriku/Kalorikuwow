@@ -1,66 +1,50 @@
 package com.dicoding.kaloriku.ui
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.kaloriku.databinding.ActivityMainBinding
-import com.dicoding.kaloriku.ui.auth.LoginActivity
-import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
+import com.dicoding.kaloriku.R
+import com.dicoding.kaloriku.ui.fragment.DashboardFragment
+import com.dicoding.kaloriku.ui.fragment.ProfileFragment
+import com.dicoding.kaloriku.ui.fragment.ProgressFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel by viewModels<MainViewModel> {
-        ViewModelFactory.getInstance(this)
-    }
-    private val bmiViewModel by viewModels<BMIViewModel> {
-        ViewModelFactory.getInstance(this)
-    }
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, ProgressFragment())
+            .commit()
 
-            bmiViewModel.calculateBMI(user.userId)
-        }
-
-        bmiViewModel.bmiResult.observe(this) { bmiResponse ->
-            bmiResponse?.let {
-                val bmiText = "BMI: ${bmiResponse.bmi}\nCategory: ${bmiResponse.category}"
-                binding.bmiTextView.text = bmiResponse.bmi
-                binding.categoryTextView.text = bmiResponse.category
-            }
-        }
-        setupView()
-        setupAction()
+        setupBottomNavigation()
     }
 
-    private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-        supportActionBar?.hide()
-    }
-
-    private fun setupAction() {
-        binding.logoutButton.setOnClickListener {
-            viewModel.logout()
+    private fun setupBottomNavigation() {
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.progressFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, ProgressFragment())
+                        .commit()
+                    true
+                }
+                R.id.dashboardFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, DashboardFragment())
+                        .commit()
+                    true
+                }
+                R.id.profileFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, ProfileFragment())
+                        .commit()
+                    true
+                }
+                // Kasus untuk ProfileFragment dan SettingsFragment
+                else -> false
+            }
         }
     }
 }

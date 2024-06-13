@@ -1,11 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Kaloriku" parent="Theme.Material3.DayNight.NoActionBar">
-
+        <!-- Add other base theme attributes if necessary -->
     </style>
 
-    <style name="Theme.Kaloriku" parent="Base.Theme.Kaloriku" >
-    <!--   Primary Color -->
+    <style name="Theme.Kaloriku" parent="Base.Theme.Kaloriku">
+        <!-- Primary Color -->
         <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="Theme.BottomNavigation" parent="Base.Theme.Kaloriku"/>
+
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/white</item>
+    </style>
+
+    <style name="BottomNavigationViewActive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="BottomNavigationViewInactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">11sp</item>
     </style>
 </resources>
