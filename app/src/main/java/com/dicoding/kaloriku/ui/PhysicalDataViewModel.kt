@@ -16,9 +16,6 @@ class PhysicalDataViewModel(private val repository: UserRepository) : ViewModel(
     private val _updatePhysicalResult = MutableLiveData<Result<UpdatePhysicalResponse>>()
     val updatePhysicalResult: LiveData<Result<UpdatePhysicalResponse>> = _updatePhysicalResult
 
-    private val _physicalData = MutableLiveData<UpdatePhysicalRequest>()
-    val physicalData: LiveData<UpdatePhysicalRequest> = _physicalData
-
     fun getTokenAndUpdatePhysicalData(request: UpdatePhysicalRequest) {
         viewModelScope.launch {
             val token = repository.getToken().first()
@@ -38,19 +35,6 @@ class PhysicalDataViewModel(private val repository: UserRepository) : ViewModel(
                 _updatePhysicalResult.postValue(Result.success(response))
             } catch (e: Exception) {
                 _updatePhysicalResult.postValue(Result.failure(e))
-            }
-        }
-    }
-
-    fun fetchPhysicalData() {
-        viewModelScope.launch {
-            try {
-                val token = repository.getToken().first()
-                val userId = repository.getUserId().first()
-                val physicalData = repository.getPhysicalData(userId, token)
-                _physicalData.postValue(physicalData)
-            } catch (e: Exception) {
-                Log.e("PhysicalDataViewModel", "Failed to fetch physical data", e)
             }
         }
     }

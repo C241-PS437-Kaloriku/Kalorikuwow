@@ -25,7 +25,7 @@ data class UpdatePhysicalRequest(
 	@SerializedName("userId")
 	val userId: String,
 
-	@SerializedName("name")
-	val name: String="",
+	@SerializedName("username")
+	val username: String,
 
 )
