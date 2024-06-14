@@ -4,15 +4,15 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.kaloriku.data.di.Injection
+import com.dicoding.kaloriku.data.pref.PhysicalDataPreferences
 import com.dicoding.kaloriku.data.pref.UserRepository
-import com.dicoding.kaloriku.data.retrofit.ApiConfig
-import com.dicoding.kaloriku.data.retrofit.ApiService
 import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
 import com.dicoding.kaloriku.ui.auth.viewmodel.LoginViewModel
+import com.dicoding.kaloriku.ui.fragment.ProfileViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
-    private val apiService: ApiService
+    private val physicalDataPreferences: PhysicalDataPreferences,
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -30,6 +30,9 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(BMIViewModel::class.java) -> {
                 BMIViewModel(userRepository) as T // Pass apiService here
             }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(userRepository, physicalDataPreferences) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -39,15 +42,12 @@ class ViewModelFactory(
         private var INSTANCE: ViewModelFactory? = null
         @JvmStatic
         fun getInstance(context: Context): ViewModelFactory {
-            if (INSTANCE == null) {
-                synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(
-                        Injection.provideUserRepository(context),
-                        ApiConfig.getApiService() // Pass ApiService here
-                    )
-                }
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: ViewModelFactory(
+                    Injection.provideUserRepository(context),
+                    Injection.providePhysicalDataPreferences(context)
+                ).also { INSTANCE = it }
             }
-            return INSTANCE as ViewModelFactory
         }
     }
 }

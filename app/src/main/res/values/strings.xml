@@ -50,4 +50,10 @@
     <string name="dashboard">Dashboard</string>
     <string name="profile">Profile</string>
     <string name="home">Home</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="age">Age</string>
+    <string name="edit">Edit</string>
+    <string name="birth">Birth</string>
+    <string name="name">Name</string>
 </resources>
