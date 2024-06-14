@@ -58,6 +58,38 @@
             android:textColorLink="@color/colorPrimary"
             android:autoLink="all"/>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameEditTextLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            app:boxBackgroundMode="none"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_face_24"
+                    android:contentDescription="@string/name"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="2dp"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameEditText"
+                    android:hint="@string/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/textinput_background"/>
+            </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -73,27 +105,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="24dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:text="@string/weight"
-                    android:fontFamily="@font/inter_bold"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="0dp"/>
-
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_baseline_fitness_center_24"
                     android:contentDescription="@string/weight"
                     android:paddingStart="6dp"
-                    android:paddingEnd="0dp"/>
+                    android:paddingEnd="2dp"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/weightEditText"
+                    android:hint="@string/weight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -116,27 +139,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="24dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:text="@string/height"
-                    android:fontFamily="@font/inter_bold"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="0dp"/>
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_baseline_height_24"
                     android:contentDescription="@string/height"
                     android:paddingStart="6dp"
-                    android:paddingEnd="0dp"/>
+                    android:paddingEnd="4dp"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/heightEditText"
+                    android:hint="@string/height"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -159,27 +174,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="24dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:text="@string/birth"
-                    android:fontFamily="@font/inter_bold"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="0dp"/>
-
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_baseline_date_range_24"
                     android:contentDescription="@string/birthdate"
                     android:paddingStart="6dp"
-                    android:paddingEnd="0dp"/>
+                    android:paddingEnd="2dp"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/birthdateEditText"
+                    android:hint="@string/birthdate"
                     android:background="@drawable/textinput_background"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -196,19 +202,9 @@
             android:orientation="horizontal"
             android:layout_marginTop="16dp">
 
-            <TextView
-                android:layout_width="50dp"
-                android:layout_height="24dp"
-                android:gravity="center"
-                android:textSize="12sp"
-                android:text="@string/gender"
-                android:fontFamily="@font/inter_bold"
-                android:paddingStart="6dp"
-                android:paddingEnd="0dp"/>
-
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_baseline_person_24"
                 android:contentDescription="@string/gender"/>

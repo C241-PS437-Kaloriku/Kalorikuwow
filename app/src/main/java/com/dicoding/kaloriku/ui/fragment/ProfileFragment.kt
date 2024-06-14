@@ -86,6 +86,7 @@ class ProfileFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.physicalData.observe(viewLifecycleOwner) { data ->
+            binding.nameEditText.setText(data.name)
             binding.weightEditText.setText(data.weight.toString())
             binding.heightEditText.setText(data.height.toString())
             binding.birthdateEditText.setText(data.birthdate)
@@ -101,13 +102,14 @@ class ProfileFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                // Simpan data lokal setelah berhasil mengupdate di server
+                // Save local data after successfully updating on the server
                 val updatedPhysicalData = UpdatePhysicalRequest(
                     binding.weightEditText.text.toString().toInt(),
                     binding.heightEditText.text.toString().toInt(),
                     binding.genderSpinner.selectedItem.toString().lowercase(),
                     binding.birthdateEditText.text.toString(),
-                    userId = ""
+                    userId = "",
+                    name = binding.nameEditText.text.toString()  // Add this line
                 )
                 physicalDataPreferences.savePhysicalData(updatedPhysicalData)
             }.onFailure { throwable ->
@@ -130,12 +132,14 @@ class ProfileFragment : Fragment() {
         binding.weightEditText.isEnabled = enable
         binding.heightEditText.isEnabled = enable
         binding.birthdateEditText.isEnabled = enable
+        binding.nameEditText.isEnabled = enable
         binding.genderSpinner.isEnabled = enable
 
         binding.btnSave.text = if (enable) getString(R.string.save) else getString(R.string.edit)
     }
 
     private fun saveData() {
+        val name = binding.nameEditText.text.toString()  // Add this line
         val weight = binding.weightEditText.text.toString().toIntOrNull()
         val height = binding.heightEditText.text.toString().toIntOrNull()
         val gender = binding.genderSpinner.selectedItem.toString().lowercase()
@@ -151,13 +155,8 @@ class ProfileFragment : Fragment() {
             return
         }
 
-        val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "")
+        val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", name = name)  // Add name
         viewModel.updatePhysicalData(request)
         enableEditMode(false)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
