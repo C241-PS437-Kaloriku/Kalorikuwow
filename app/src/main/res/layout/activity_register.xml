@@ -124,7 +124,13 @@
         android:layout_gravity="center"
         android:textStyle="bold"
         android:layout_marginTop="0dp"
-        android:fontFamily="@font/inter_bold"/>
+        android:fontFamily="@font/inter_bold"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:textColorLink="@color/colorPrimary"
+        android:autoLink="all"/>
 
     <ProgressBar
         android:id="@+id/loadingProgressBar"

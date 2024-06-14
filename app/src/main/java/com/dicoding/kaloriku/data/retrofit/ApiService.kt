@@ -9,12 +9,7 @@ import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.data.response.UpdatePhysicalResponse
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -31,9 +26,15 @@ interface ApiService {
         @Body loginRequest: LoginRequest
     ): Call<LoginResponse>
 
-    @PUT("update-physical")
-    fun updatePhysical(
-        @Body updatePhysicalRequest: UpdatePhysicalRequest
-    ): Call<UpdatePhysicalResponse>
+    @GET("physical-data/{userId}")
+    suspend fun getPhysicalData(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: String
+    ): Response<UpdatePhysicalRequest>
 
+    @PUT("update-physical")
+    suspend fun updatePhysical(
+        @Header("Authorization") token: String,
+        @Body updatePhysicalRequest: UpdatePhysicalRequest
+    ): Response<UpdatePhysicalResponse>
 }

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.kaloriku.R
+import com.dicoding.kaloriku.data.pref.PhysicalDataPreferences
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.databinding.ActivityPhysicalDataBinding
 import com.google.android.material.textfield.TextInputLayout
@@ -19,6 +20,9 @@ class PhysicalDataActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPhysicalDataBinding
     private val viewModel: PhysicalDataViewModel by viewModels {
         ViewModelFactory.getInstance(this)
+    }
+    private val physicalDataPreferences: PhysicalDataPreferences by lazy {
+        PhysicalDataPreferences.getInstance(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -137,6 +141,17 @@ class PhysicalDataActivity : AppCompatActivity() {
                     "Physical Data updated: ${response.message}",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                // Simpan data lokal setelah berhasil mengupdate di server
+                val request = UpdatePhysicalRequest(
+                    binding.weightEditText.text.toString().toInt(),
+                    binding.heightEditText.text.toString().toInt(),
+                    binding.genderSpinner.selectedItem.toString().lowercase(),
+                    binding.birthdateEditText.text.toString(),
+                    userId = ""
+                )
+                physicalDataPreferences.savePhysicalData(request)
+
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -149,5 +164,4 @@ class PhysicalDataActivity : AppCompatActivity() {
             }
         }
     }
-
 }
