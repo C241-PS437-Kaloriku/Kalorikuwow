@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                     true
                 }
-                // Kasus untuk ProfileFragment dan SettingsFragment
                 else -> false
             }
         }

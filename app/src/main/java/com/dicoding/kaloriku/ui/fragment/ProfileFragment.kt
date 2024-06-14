@@ -25,7 +25,7 @@ class ProfileFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
     private val physicalDataPreferences: PhysicalDataPreferences by lazy {
-        PhysicalDataPreferences.getInstance(requireContext()) // Use getInstance method
+        PhysicalDataPreferences.getInstance(requireContext())
     }
 
     private var isEditMode = false
@@ -102,14 +102,13 @@ class ProfileFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                // Save local data after successfully updating on the server
                 val updatedPhysicalData = UpdatePhysicalRequest(
                     binding.weightEditText.text.toString().toInt(),
                     binding.heightEditText.text.toString().toInt(),
                     binding.genderSpinner.selectedItem.toString().lowercase(),
                     binding.birthdateEditText.text.toString(),
                     userId = "",
-                    name = binding.nameEditText.text.toString()  // Add this line
+                    name = binding.nameEditText.text.toString()
                 )
                 physicalDataPreferences.savePhysicalData(updatedPhysicalData)
             }.onFailure { throwable ->
@@ -139,7 +138,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun saveData() {
-        val name = binding.nameEditText.text.toString()  // Add this line
+        val name = binding.nameEditText.text.toString()
         val weight = binding.weightEditText.text.toString().toIntOrNull()
         val height = binding.heightEditText.text.toString().toIntOrNull()
         val gender = binding.genderSpinner.selectedItem.toString().lowercase()
@@ -155,7 +154,7 @@ class ProfileFragment : Fragment() {
             return
         }
 
-        val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", name = name)  // Add name
+        val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", name = name)
         viewModel.updatePhysicalData(request)
         enableEditMode(false)
     }

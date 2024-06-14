@@ -24,7 +24,6 @@ class ProfileViewModel(
     val updateResult: LiveData<Result<UpdatePhysicalResponse>> = _updateResult
 
     init {
-        // Memuat data lokal saat ProfileViewModel diinisialisasi
         val physicalData = physicalDataPreferences.getPhysicalData()
         _physicalData.value = physicalData
     }
@@ -48,9 +47,8 @@ class ProfileViewModel(
                 val userId = userRepository.getUserId().first()
                 val response = userRepository.updatePhysicalData(request.copy(userId = userId), token)
                 _updateResult.value = Result.success(response)
-                _physicalData.value = request // Update local LiveData after a successful update
+                _physicalData.value = request
 
-                // Simpan data lokal setelah berhasil mengupdate di server
                 physicalDataPreferences.savePhysicalData(request)
             } catch (e: Exception) {
                 _updateResult.value = Result.failure(e)

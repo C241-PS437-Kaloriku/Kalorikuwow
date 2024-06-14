@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
-    private val apiService: ApiService // Added ApiService as a constructor parameter
+    private val apiService: ApiService
 ) {
 
     suspend fun saveSession(user: UserModel) {
@@ -45,9 +45,7 @@ class UserRepository private constructor(
     }
 
     suspend fun getPhysicalData(userId: String, token: String): UpdatePhysicalRequest {
-        // Implement the logic to fetch physical data using userId and token
-        // Example:
-        val response = apiService.getPhysicalData(token, userId) // Replace with actual API call
+        val response = apiService.getPhysicalData(token, userId)
         return if (response.isSuccessful) {
             response.body() ?: throw Exception("No data available")
         } else {
@@ -66,7 +64,7 @@ class UserRepository private constructor(
 
         fun getInstance(
             userPreference: UserPreference,
-            apiService: ApiService // Added apiService parameter
+            apiService: ApiService
         ): UserRepository =
             instance ?: synchronized(this) {
                 instance ?: UserRepository(userPreference, apiService)
