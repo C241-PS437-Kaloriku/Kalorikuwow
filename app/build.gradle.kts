@@ -38,6 +38,7 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+        mlModelBinding = true
     }
 }
 
@@ -58,11 +59,15 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     implementation(libs.datastore.preferences)
-
-    // Fragment KTX untuk viewModels
-    implementation ("androidx.fragment:fragment-ktx:1.5.7")
-
-    // Lifecycle KTX
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
+    val cameraxVersion = "1.2.3"
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
+    implementation("androidx.camera:camera-core:1.3.3")
+    implementation ("androidx.fragment:fragment-ktx:1.8.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 
 
