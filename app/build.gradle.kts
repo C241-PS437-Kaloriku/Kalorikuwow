@@ -60,10 +60,10 @@ dependencies {
     implementation(libs.datastore.preferences)
 
     // Fragment KTX untuk viewModels
-    implementation ("androidx.fragment:fragment-ktx:1.5.7")
+    implementation ("androidx.fragment:fragment-ktx:1.8.0")
 
     // Lifecycle KTX
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1")
 
 
 }
