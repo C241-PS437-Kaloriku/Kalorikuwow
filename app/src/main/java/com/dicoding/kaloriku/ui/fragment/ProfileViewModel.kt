@@ -40,15 +40,16 @@ class ProfileViewModel(
             }
         }
     }
+
     fun updatePhysicalData(request: UpdatePhysicalRequest) {
         viewModelScope.launch {
             try {
                 val token = userRepository.getToken().first()
                 val userId = userRepository.getUserId().first()
                 val response = userRepository.updatePhysicalData(request.copy(userId = userId), token)
+
                 _updateResult.value = Result.success(response)
                 _physicalData.value = request
-
                 physicalDataPreferences.savePhysicalData(request)
             } catch (e: Exception) {
                 _updateResult.value = Result.failure(e)
@@ -56,4 +57,3 @@ class ProfileViewModel(
         }
     }
 }
-
