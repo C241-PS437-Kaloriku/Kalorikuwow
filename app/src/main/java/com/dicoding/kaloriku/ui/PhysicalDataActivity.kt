@@ -117,6 +117,7 @@ class PhysicalDataActivity : AppCompatActivity() {
             val height = binding.heightEditText.text.toString().toIntOrNull()
             val gender = binding.genderSpinner.selectedItem.toString().lowercase()
             val birthdate = binding.birthdateEditText.text.toString()
+            val username = binding.usernameEditText.text.toString()
 
             if (weight == null || height == null) {
                 Toast.makeText(this, "Please enter valid weight and height", Toast.LENGTH_SHORT).show()
@@ -128,7 +129,7 @@ class PhysicalDataActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "")
+            val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", username = username)
             viewModel.getTokenAndUpdatePhysicalData(request)
         }
     }
@@ -142,13 +143,13 @@ class PhysicalDataActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                // Simpan data lokal setelah berhasil mengupdate di server
                 val request = UpdatePhysicalRequest(
                     binding.weightEditText.text.toString().toInt(),
                     binding.heightEditText.text.toString().toInt(),
                     binding.genderSpinner.selectedItem.toString().lowercase(),
                     binding.birthdateEditText.text.toString(),
-                    userId = ""
+                    userId = "",
+                    binding.usernameEditText.text.toString(),
                 )
                 physicalDataPreferences.savePhysicalData(request)
 

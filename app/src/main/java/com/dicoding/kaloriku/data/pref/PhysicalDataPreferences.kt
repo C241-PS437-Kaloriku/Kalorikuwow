@@ -14,7 +14,7 @@ class PhysicalDataPreferences private constructor(context: Context) {
         editor.putInt("height", physicalData.height)
         editor.putString("gender", physicalData.gender)
         editor.putString("birthdate", physicalData.birthdate)
-        editor.putString("name", physicalData.name)
+        editor.putString("username", physicalData.username)
         editor.apply()
     }
 
@@ -23,8 +23,8 @@ class PhysicalDataPreferences private constructor(context: Context) {
         val height = sharedPreferences.getInt("height", 0)
         val gender = sharedPreferences.getString("gender", "") ?: ""
         val birthdate = sharedPreferences.getString("birthdate", "") ?: ""
-        val name = sharedPreferences.getString("name", "") ?: ""
-        return UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", name = name)
+        val username = sharedPreferences.getString("username", "") ?: ""
+        return UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", username)
     }
 
 

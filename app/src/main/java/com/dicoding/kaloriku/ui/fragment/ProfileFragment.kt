@@ -86,7 +86,7 @@ class ProfileFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.physicalData.observe(viewLifecycleOwner) { data ->
-            binding.nameEditText.setText(data.name)
+            binding.usernameEditText.setText(data.username)
             binding.weightEditText.setText(data.weight.toString())
             binding.heightEditText.setText(data.height.toString())
             binding.birthdateEditText.setText(data.birthdate)
@@ -108,7 +108,7 @@ class ProfileFragment : Fragment() {
                     binding.genderSpinner.selectedItem.toString().lowercase(),
                     binding.birthdateEditText.text.toString(),
                     userId = "",
-                    name = binding.nameEditText.text.toString()
+                    username = binding.usernameEditText.text.toString()
                 )
                 physicalDataPreferences.savePhysicalData(updatedPhysicalData)
             }.onFailure { throwable ->
@@ -131,14 +131,14 @@ class ProfileFragment : Fragment() {
         binding.weightEditText.isEnabled = enable
         binding.heightEditText.isEnabled = enable
         binding.birthdateEditText.isEnabled = enable
-        binding.nameEditText.isEnabled = enable
+        binding.usernameEditText.isEnabled = enable
         binding.genderSpinner.isEnabled = enable
 
         binding.btnSave.text = if (enable) getString(R.string.save) else getString(R.string.edit)
     }
 
     private fun saveData() {
-        val name = binding.nameEditText.text.toString()
+        val username = binding.usernameEditText.text.toString()
         val weight = binding.weightEditText.text.toString().toIntOrNull()
         val height = binding.heightEditText.text.toString().toIntOrNull()
         val gender = binding.genderSpinner.selectedItem.toString().lowercase()
@@ -154,7 +154,7 @@ class ProfileFragment : Fragment() {
             return
         }
 
-        val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", name = name)
+        val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", username = username)
         viewModel.updatePhysicalData(request)
         enableEditMode(false)
     }
