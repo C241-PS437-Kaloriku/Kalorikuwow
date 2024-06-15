@@ -21,5 +21,5 @@ data class RegisterRequest(
 	val password: String,
 
 	@SerializedName("birthdate")
-	val birthdate: Date
+	val birthdate: String
 )

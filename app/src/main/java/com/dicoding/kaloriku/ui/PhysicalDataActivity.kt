@@ -157,11 +157,19 @@ class PhysicalDataActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }.onFailure { throwable ->
-                Toast.makeText(
-                    this,
-                    "Failed to update Physical Data: ${throwable.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (throwable.message?.contains("Username yang anda masukan sudah digunakan") == true) {
+                    Toast.makeText(
+                        this,
+                        "Username telah digunakan, coba gunakan username lain.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this,
+                        throwable.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }

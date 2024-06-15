@@ -145,19 +145,23 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             val birthdateString = binding.birthdateEditText.text.toString()
-
-            val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
+            if (!isValidBirthdate(birthdateString)) {
+                binding.birthdateEditTextLayout.error = "Format tanggal tidak valid, contoh: 2023-12-21"
+                return@setOnClickListener
+            }
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val birthdate: Date = dateFormatter.parse(birthdateString)
 
             binding.loadingProgressBar.visibility = View.VISIBLE
 
-            viewModel.register(email, password, birthdate)
+            viewModel.register(email, password, dateFormatter.format(birthdate))
         }
         binding.tvLoginHere.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }
+
 
     private fun observeViewModel() {
         viewModel.registerResult.observe(this) { response ->
@@ -183,10 +187,10 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun showErrorDialog(message: String) {
+    private fun showErrorDialog(erormessage: String) {
         AlertDialog.Builder(this).apply {
             setTitle("Gagal Melakukan Registrasi")
-            setMessage(message)
+            setMessage(erormessage)
             setPositiveButton("Kembali") { _, _ -> }
             create()
             show()
@@ -200,3 +204,4 @@ class RegisterActivity : AppCompatActivity() {
         finish()
     }
 }
+

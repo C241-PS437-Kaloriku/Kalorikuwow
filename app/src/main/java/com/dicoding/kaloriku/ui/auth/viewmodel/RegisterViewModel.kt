@@ -16,8 +16,8 @@ class RegisterViewModel : ViewModel() {
     private val _registerResult = MutableLiveData<RegisterResponse?>()
     val registerResult: LiveData<RegisterResponse?> = _registerResult
 
-    fun register(email: String, password: String, birthdate: Date) {
-        val registerRequest = RegisterRequest(email, password, birthdate) // Create a RegisterRequest instance
+    fun register(email: String, password: String, birthdate: String) {
+        val registerRequest = RegisterRequest(email, password, birthdate)
         val client = ApiConfig.getApiService().register(registerRequest)
         client.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
@@ -37,3 +37,4 @@ class RegisterViewModel : ViewModel() {
         })
     }
 }
+

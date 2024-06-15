@@ -96,30 +96,34 @@ class ProfileFragment : Fragment() {
 
         viewModel.updateResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess { response ->
-                Toast.makeText(
-                    requireContext(),
-                    "Physical Data updated: ${response.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                val updatedPhysicalData = UpdatePhysicalRequest(
-                    binding.weightEditText.text.toString().toInt(),
-                    binding.heightEditText.text.toString().toInt(),
-                    binding.genderSpinner.selectedItem.toString().lowercase(),
-                    binding.birthdateEditText.text.toString(),
-                    userId = "",
-                    username = binding.usernameEditText.text.toString()
-                )
-                physicalDataPreferences.savePhysicalData(updatedPhysicalData)
+                response.message?.let { message ->
+                    Toast.makeText(
+                        requireContext(),
+                        message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val updatedPhysicalData = UpdatePhysicalRequest(
+                        binding.weightEditText.text.toString().toInt(),
+                        binding.heightEditText.text.toString().toInt(),
+                        binding.genderSpinner.selectedItem.toString().lowercase(),
+                        binding.birthdateEditText.text.toString(),
+                        userId = "",
+                        username = binding.usernameEditText.text.toString()
+                    )
+                    physicalDataPreferences.savePhysicalData(updatedPhysicalData)
+                }
             }.onFailure { throwable ->
-                Toast.makeText(
-                    requireContext(),
-                    "Failed to update Physical Data: ${throwable.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                throwable.message?.let { errorMessage ->
+                    Toast.makeText(
+                        requireContext(),
+                        errorMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
+
 
     private fun getGenderPosition(gender: String): Int {
         val genderOptions = resources.getStringArray(R.array.gender_options)
