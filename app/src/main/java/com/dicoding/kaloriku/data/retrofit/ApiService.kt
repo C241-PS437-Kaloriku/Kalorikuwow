@@ -26,7 +26,7 @@ interface ApiService {
         @Body loginRequest: LoginRequest
     ): Call<LoginResponse>
 
-    @GET("physical-data/{userId}")
+    @GET("profile/?userId={userId}")
     suspend fun getPhysicalData(
         @Header("Authorization") token: String,
         @Path("userId") userId: String
