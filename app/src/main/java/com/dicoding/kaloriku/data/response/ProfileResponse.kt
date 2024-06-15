@@ -1,5 +1,6 @@
 package com.dicoding.kaloriku.data.response
 
+import com.dicoding.kaloriku.data.pref.UserPreference
 import com.google.gson.annotations.SerializedName
 
 data class ProfileResponse(
@@ -8,7 +9,7 @@ data class ProfileResponse(
 	val message: String? = null,
 
 	@field:SerializedName("user")
-	val user: User? = null
+	val user: UserProfile? = null
 )
 
 data class UserProfile(
@@ -17,7 +18,7 @@ data class UserProfile(
 	val birthdate: String? = null,
 
 	@field:SerializedName("gender")
-	val gender: String? = null,
+	val gender: String,
 
 	@field:SerializedName("weight")
 	val weight: Int? = null,

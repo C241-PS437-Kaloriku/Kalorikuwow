@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.kaloriku.R
-import com.dicoding.kaloriku.data.pref.PhysicalDataPreferences
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.databinding.ActivityPhysicalDataBinding
 import com.google.android.material.textfield.TextInputLayout
@@ -20,9 +19,6 @@ class PhysicalDataActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPhysicalDataBinding
     private val viewModel: PhysicalDataViewModel by viewModels {
         ViewModelFactory.getInstance(this)
-    }
-    private val physicalDataPreferences: PhysicalDataPreferences by lazy {
-        PhysicalDataPreferences.getInstance(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,7 +147,6 @@ class PhysicalDataActivity : AppCompatActivity() {
                     userId = "",
                     binding.usernameEditText.text.toString(),
                 )
-                physicalDataPreferences.savePhysicalData(request)
 
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
