@@ -1,0 +1,3 @@
+[submodule "Mobile-Development"]
+	path = Mobile-Development
+	url = https://github.com/Widarft/Mobile-Development.git
