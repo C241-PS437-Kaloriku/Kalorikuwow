@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.dicoding.kaloriku.databinding.FragmentProgressBinding
+import com.dicoding.kaloriku.ui.FoodRecogActivity
 import com.dicoding.kaloriku.ui.MainViewModel
 import com.dicoding.kaloriku.ui.ViewModelFactory
 import com.dicoding.kaloriku.ui.auth.LoginActivity
@@ -57,6 +58,10 @@ class ProgressFragment : Fragment() {
                 binding.categoryTextView.text = bmiResponse.category
             }
         })
+
+        binding.camera.setOnClickListener {
+            startActivity(Intent(activity, FoodRecogActivity::class.java))
+        }
     }
 
     private fun setupView() {
