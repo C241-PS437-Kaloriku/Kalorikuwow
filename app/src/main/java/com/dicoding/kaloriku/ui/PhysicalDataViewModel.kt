@@ -10,6 +10,9 @@ import com.dicoding.kaloriku.data.response.UpdatePhysicalResponse
 import com.dicoding.kaloriku.data.pref.UserRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.HttpException
 
 class PhysicalDataViewModel(private val repository: UserRepository) : ViewModel() {
 
@@ -34,8 +37,21 @@ class PhysicalDataViewModel(private val repository: UserRepository) : ViewModel(
                 val response = repository.updatePhysicalData(request, token)
                 _updatePhysicalResult.postValue(Result.success(response))
             } catch (e: Exception) {
-                _updatePhysicalResult.postValue(Result.failure(e))
+                val errorMessage = if (e is HttpException) {
+                    e.response()?.errorBody()?.string()?.let { responseBody ->
+                        try {
+                            val jsonResponse = JSONObject(responseBody)
+                            jsonResponse.getString("message")
+                        } catch (jsonException: JSONException) {
+                            e.message()
+                        }
+                    }
+                } else {
+                    e.message
+                }
+                _updatePhysicalResult.postValue(Result.failure(Exception(errorMessage)))
             }
         }
     }
+
 }
