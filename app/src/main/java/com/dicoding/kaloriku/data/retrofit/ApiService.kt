@@ -35,7 +35,7 @@ interface ApiService {
         @Query("userId") userId: String
     ): Response<ProfileResponse>
 
-    @PUT("update-physical")
+    @PUT("profile/")
     suspend fun updatePhysical(
         @Header("Authorization") token: String,
         @Body updatePhysicalRequest: UpdatePhysicalRequest
