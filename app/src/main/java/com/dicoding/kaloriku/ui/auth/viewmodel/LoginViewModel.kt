@@ -24,8 +24,8 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     fun login(email: String, password: String) {
         val loginRequest = LoginRequest(email, password)
         val client = ApiConfig.getApiService().login(loginRequest)
-        client.enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+        client.enqueue(object : retrofit2.Callback<LoginResponse> {
+            override fun onResponse(call: retrofit2.Call<LoginResponse>, response: retrofit2.Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     _loginResult.value = loginResponse
@@ -45,7 +45,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+            override fun onFailure(call: retrofit2.Call<LoginResponse>, t: Throwable) {
                 _loginResult.value = null
                 Log.e("LoginViewModel", "Login failed due to: ${t.message}", t)
             }
@@ -80,5 +80,4 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
             repository.saveToken(token)
         }
     }
-
 }

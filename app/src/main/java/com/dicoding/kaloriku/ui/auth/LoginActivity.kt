@@ -141,10 +141,8 @@ class LoginActivity : AppCompatActivity() {
             if (profileResponse != null && profileResponse.user != null) {
                 val userProfile = profileResponse.user
                 val intent = if (userProfile.weight != null && userProfile.weight > 0) {
-                    // User has provided physical data, go to MainActivity
                     Intent(this, MainActivity::class.java)
                 } else {
-                    // User has not provided physical data, go to PhysicalDataActivity
                     Intent(this, PhysicalDataActivity::class.java)
                 }
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
