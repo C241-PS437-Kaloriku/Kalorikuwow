@@ -96,15 +96,18 @@ class ProfileFragment : Fragment() {
 
    private fun observeViewModel() {
         viewModel.physicalData.observe(viewLifecycleOwner) { data ->
-            binding.usernameEditText.setText(data.username)
-            binding.weightEditText.setText(data.weight.toString())
-            binding.heightEditText.setText(data.height.toString())
-            binding.birthdateEditText.setText(data.birthdate)
-            binding.genderSpinner.setSelection(getGenderPosition(data.gender))
-
-            if (!data.profilePictureUrl.isNullOrEmpty()) {
-                profileImageUri = Uri.parse(data.profilePictureUrl)
-                binding.profileImageView.setImageURI(profileImageUri)
+            if (data != null) {
+                binding.usernameEditText.setText(data.username)
+                binding.weightEditText.setText(data.weight.toString())
+                binding.heightEditText.setText(data.height.toString())
+                binding.birthdateEditText.setText(data.birthdate)
+                binding.genderSpinner.setSelection(getGenderPosition(data.gender))
+            }
+            if (data != null) {
+                if (!data.profilePictureUrl.isNullOrEmpty()) {
+                    profileImageUri = Uri.parse(data.profilePictureUrl)
+                    binding.profileImageView.setImageURI(profileImageUri)
+                }
             }
             enableEditMode(false)
         }
