@@ -1,12 +1,14 @@
 package com.dicoding.kaloriku.data.pref
 
 import android.util.Log
+import com.dicoding.kaloriku.data.response.ProfileResponse
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.data.response.UpdatePhysicalResponse
 import com.dicoding.kaloriku.data.response.UserProfile
 import com.dicoding.kaloriku.data.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import retrofit2.Response
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
@@ -45,13 +47,8 @@ class UserRepository private constructor(
         userPreference.logout()
     }
 
-    suspend fun getPhysicalData(userId: String, token: String): UserProfile {
-        val response = apiService.getPhysicalData(token, userId)
-        if (response.isSuccessful) {
-            return response.body()?.user ?: throw Exception("User data is missing")
-        } else {
-            throw Exception("Error fetching physical data: ${response.errorBody()?.string()}")
-        }
+    suspend fun getPhysicalData(token: String, userId: String): Response<ProfileResponse> {
+        return apiService.getPhysicalData(token, userId)
     }
 
     suspend fun updatePhysicalData(request: UpdatePhysicalRequest, token: String): UpdatePhysicalResponse {

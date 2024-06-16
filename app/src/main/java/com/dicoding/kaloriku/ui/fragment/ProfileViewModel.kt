@@ -6,18 +6,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dicoding.kaloriku.data.pref.UserRepository
+import com.dicoding.kaloriku.data.response.ProfileResponse
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.data.response.UpdatePhysicalResponse
 import com.dicoding.kaloriku.data.response.UserProfile
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import retrofit2.Response
+
 
 class ProfileViewModel(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private val _physicalData = MutableLiveData<UserProfile>()
-    val physicalData: LiveData<UserProfile> = _physicalData
+    private val _physicalData = MutableLiveData<UserProfile?>()
+    val physicalData: LiveData<UserProfile?> = _physicalData
 
     private val _updateResult = MutableLiveData<Result<UpdatePhysicalResponse>>()
     val updateResult: LiveData<Result<UpdatePhysicalResponse>> = _updateResult
@@ -27,9 +30,17 @@ class ProfileViewModel(
             try {
                 val token = userRepository.getToken().first()
                 val userId = userRepository.getUserId().first()
-                val physicalData = userRepository.getPhysicalData(userId, token)
-                _physicalData.value = physicalData
+                val response: Response<ProfileResponse> = userRepository.getPhysicalData(token, userId)
+
+                if (response.isSuccessful) {
+                    val profileResponse = response.body()
+                    _physicalData.value = profileResponse?.user
+                } else {
+                    _physicalData.value = null
+                    Log.e("ProfileViewModel", "Error loading physical data: ${response.errorBody()?.string()}")
+                }
             } catch (e: Exception) {
+                _physicalData.value = null
                 Log.e("ProfileViewModel", "Error loading physical data", e)
             }
         }

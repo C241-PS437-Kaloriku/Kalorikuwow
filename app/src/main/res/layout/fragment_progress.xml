@@ -206,14 +206,14 @@
 
             <TextView
                 android:id="@+id/categoryTextView"
-                android:layout_width="171dp"
-                android:layout_height="35dp"
+                android:layout_width="174dp"
+                android:layout_height="31dp"
                 android:layout_gravity="center"
                 android:fontFamily="@font/inter_bold"
                 android:text="@string/bmistatus"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

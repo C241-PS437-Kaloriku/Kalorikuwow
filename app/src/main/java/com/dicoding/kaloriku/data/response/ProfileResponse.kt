@@ -2,41 +2,40 @@ package com.dicoding.kaloriku.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ProfileResponse(
-
-	@field:SerializedName("message")
-	val message: String? = null,
-
-	@field:SerializedName("user")
-	val user: UserProfile? = null
-)
-
 data class UserProfile(
-
-	@field:SerializedName("birthdate")
+	@SerializedName("birthdate")
 	val birthdate: String? = null,
 
-	@field:SerializedName("gender")
+	@SerializedName("gender")
 	val gender: String,
 
-	@field:SerializedName("weight")
+	@SerializedName("weight")
 	val weight: Int? = null,
 
-	@field:SerializedName("userId")
+	@SerializedName("userId")
 	val userId: String? = null,
 
-	@field:SerializedName("email")
+	@SerializedName("email")
 	val email: String? = null,
 
-	@field:SerializedName("age")
+	@SerializedName("age")
 	val age: Int? = null,
 
-	@field:SerializedName("username")
+	@SerializedName("username")
 	val username: String? = null,
-
 	@field:SerializedName("height")
 	val height: Int? = null,
 
 	@field:SerializedName("profilePictureUrl")
 	val profilePictureUrl: String?,
 )
+
+data class ProfileResponse(
+	@SerializedName("message")
+	val message: String? = null,
+
+	@SerializedName("user")
+	val user: UserProfile? = null
+)
+
+

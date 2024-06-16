@@ -94,7 +94,7 @@ class ProfileFragment : Fragment() {
         return date.matches(regex)
     }
 
-    private fun observeViewModel() {
+   private fun observeViewModel() {
         viewModel.physicalData.observe(viewLifecycleOwner) { data ->
             binding.usernameEditText.setText(data.username)
             binding.weightEditText.setText(data.weight.toString())
@@ -168,7 +168,6 @@ class ProfileFragment : Fragment() {
         viewModel.updatePhysicalData(request)
         enableEditMode(false)
     }
-
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         resultLauncher.launch(intent)
