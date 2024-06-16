@@ -28,4 +28,7 @@ data class UpdatePhysicalRequest(
 	@SerializedName("username")
 	val username: String,
 
+	@SerializedName("profilePictureUrl")
+	val profilePictureUrl: String? = null
+
 )

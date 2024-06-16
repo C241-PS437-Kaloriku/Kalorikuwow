@@ -130,6 +130,7 @@ class PhysicalDataActivity : AppCompatActivity() {
         }
     }
 
+
     private fun observeViewModel() {
         viewModel.updatePhysicalResult.observe(this) { result ->
             result.onSuccess { response ->

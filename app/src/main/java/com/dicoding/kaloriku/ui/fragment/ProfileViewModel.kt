@@ -59,7 +59,8 @@ class ProfileViewModel(
             height = this.height,
             gender = this.gender,
             birthdate = this.birthdate,
-            age = null
+            age = null,
+            profilePictureUrl = this.profilePictureUrl
         )
     }
 }
