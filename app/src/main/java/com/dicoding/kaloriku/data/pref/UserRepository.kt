@@ -3,6 +3,7 @@ package com.dicoding.kaloriku.data.pref
 import android.util.Log
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.data.response.UpdatePhysicalResponse
+import com.dicoding.kaloriku.data.response.UserProfile
 import com.dicoding.kaloriku.data.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -36,20 +37,20 @@ class UserRepository private constructor(
         return userPreference.getSession().map { it.userId }
     }
 
-    suspend fun logout() {
-        userPreference.logout()
-    }
-
     suspend fun hasPhysicalData(): Boolean {
         return userPreference.hasPhysicalData()
     }
 
-    suspend fun getPhysicalData(userId: String, token: String): UpdatePhysicalRequest {
+    suspend fun logout() {
+        userPreference.logout()
+    }
+
+    suspend fun getPhysicalData(userId: String, token: String): UserProfile {
         val response = apiService.getPhysicalData(token, userId)
-        return if (response.isSuccessful) {
-            response.body() ?: throw Exception("No data available")
+        if (response.isSuccessful) {
+            return response.body()?.user ?: throw Exception("User data is missing")
         } else {
-            throw Exception(response.errorBody()?.string() ?: "Unknown error")
+            throw Exception("Error fetching physical data: ${response.errorBody()?.string()}")
         }
     }
 

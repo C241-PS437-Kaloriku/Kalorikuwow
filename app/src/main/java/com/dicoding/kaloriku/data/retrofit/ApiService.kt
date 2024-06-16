@@ -3,6 +3,7 @@ package com.dicoding.kaloriku.data.retrofit
 import com.dicoding.kaloriku.data.response.BMIResponse
 import com.dicoding.kaloriku.data.response.LoginRequest
 import com.dicoding.kaloriku.data.response.LoginResponse
+import com.dicoding.kaloriku.data.response.ProfileResponse
 import com.dicoding.kaloriku.data.response.RegisterRequest
 import com.dicoding.kaloriku.data.response.RegisterResponse
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
@@ -19,18 +20,20 @@ interface ApiService {
     ): Call<RegisterResponse>
 
     @GET("bmical")
-    suspend fun calculateBMI(@Header("Authorization") token: String, @Query("userId") userId: String): Response<BMIResponse>
+    suspend fun calculateBMI(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: String): Response<BMIResponse>
 
     @POST("login")
     fun login(
         @Body loginRequest: LoginRequest
     ): Call<LoginResponse>
 
-    @GET("physical-data/{userId}")
+    @GET("profile/")
     suspend fun getPhysicalData(
         @Header("Authorization") token: String,
-        @Path("userId") userId: String
-    ): Response<UpdatePhysicalRequest>
+        @Query("userId") userId: String
+    ): Response<ProfileResponse>
 
     @PUT("update-physical")
     suspend fun updatePhysical(

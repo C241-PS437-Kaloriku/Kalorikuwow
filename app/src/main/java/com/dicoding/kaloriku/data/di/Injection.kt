@@ -1,7 +1,6 @@
 package com.dicoding.kaloriku.data.di
 
 import android.content.Context
-import com.dicoding.kaloriku.data.pref.PhysicalDataPreferences
 import com.dicoding.kaloriku.data.pref.UserPreference
 import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.data.pref.dataStore
@@ -13,10 +12,6 @@ class Injection {
             val pref = UserPreference.getInstance(context.dataStore)
             val apiService = ApiConfig.getApiService()
             return UserRepository.getInstance(pref, apiService)
-        }
-
-        fun providePhysicalDataPreferences(context: Context): PhysicalDataPreferences {
-            return PhysicalDataPreferences.getInstance(context)
         }
     }
 }

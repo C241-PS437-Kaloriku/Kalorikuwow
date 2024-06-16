@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.dicoding.kaloriku.R
-import com.dicoding.kaloriku.data.pref.PhysicalDataPreferences
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.databinding.FragmentProfileBinding
 import com.dicoding.kaloriku.ui.ViewModelFactory
@@ -23,9 +22,6 @@ class ProfileFragment : Fragment() {
 
     private val viewModel: ProfileViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
-    }
-    private val physicalDataPreferences: PhysicalDataPreferences by lazy {
-        PhysicalDataPreferences.getInstance(requireContext())
     }
 
     private var isEditMode = false
@@ -102,28 +98,18 @@ class ProfileFragment : Fragment() {
                         message,
                         Toast.LENGTH_SHORT
                     ).show()
-                    val updatedPhysicalData = UpdatePhysicalRequest(
-                        binding.weightEditText.text.toString().toInt(),
-                        binding.heightEditText.text.toString().toInt(),
-                        binding.genderSpinner.selectedItem.toString().lowercase(),
-                        binding.birthdateEditText.text.toString(),
-                        userId = "",
-                        username = binding.usernameEditText.text.toString()
-                    )
-                    physicalDataPreferences.savePhysicalData(updatedPhysicalData)
                 }
             }.onFailure { throwable ->
                 throwable.message?.let { errorMessage ->
                     Toast.makeText(
                         requireContext(),
-                        errorMessage,
+                        "Username sudah digunakan: $errorMessage",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
         }
     }
-
 
     private fun getGenderPosition(gender: String): Int {
         val genderOptions = resources.getStringArray(R.array.gender_options)
