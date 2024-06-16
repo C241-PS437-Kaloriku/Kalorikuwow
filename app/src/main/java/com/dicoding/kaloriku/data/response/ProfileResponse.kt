@@ -3,38 +3,38 @@ package com.dicoding.kaloriku.data.response
 import com.dicoding.kaloriku.data.pref.UserPreference
 import com.google.gson.annotations.SerializedName
 
-data class ProfileResponse(
+data class UserProfile(
+	@SerializedName("birthdate")
+	val birthdate: String? = null,
 
-	@field:SerializedName("message")
+	@SerializedName("gender")
+	val gender: String,
+
+	@SerializedName("weight")
+	val weight: Int? = null,
+
+	@SerializedName("userId")
+	val userId: String? = null,
+
+	@SerializedName("email")
+	val email: String? = null,
+
+	@SerializedName("age")
+	val age: Int? = null,
+
+	@SerializedName("username")
+	val username: String? = null,
+
+	@SerializedName("height")
+	val height: Int? = null
+)
+
+data class ProfileResponse(
+	@SerializedName("message")
 	val message: String? = null,
 
-	@field:SerializedName("user")
+	@SerializedName("user")
 	val user: UserProfile? = null
 )
 
-data class UserProfile(
 
-	@field:SerializedName("birthdate")
-	val birthdate: String? = null,
-
-	@field:SerializedName("gender")
-	val gender: String,
-
-	@field:SerializedName("weight")
-	val weight: Int? = null,
-
-	@field:SerializedName("userId")
-	val userId: String? = null,
-
-	@field:SerializedName("email")
-	val email: String? = null,
-
-	@field:SerializedName("age")
-	val age: Int? = null,
-
-	@field:SerializedName("username")
-	val username: String? = null,
-
-	@field:SerializedName("height")
-	val height: Int? = null
-)

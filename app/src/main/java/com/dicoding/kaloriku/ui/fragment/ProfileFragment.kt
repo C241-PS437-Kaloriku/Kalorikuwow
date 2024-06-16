@@ -82,11 +82,13 @@ class ProfileFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.physicalData.observe(viewLifecycleOwner) { data ->
-            binding.usernameEditText.setText(data.username)
-            binding.weightEditText.setText(data.weight.toString())
-            binding.heightEditText.setText(data.height.toString())
-            binding.birthdateEditText.setText(data.birthdate)
-            binding.genderSpinner.setSelection(getGenderPosition(data.gender))
+            data?.let {
+                binding.usernameEditText.setText(it.username)
+                binding.weightEditText.setText(it.weight?.toString() ?: "")
+                binding.heightEditText.setText(it.height?.toString() ?: "")
+                binding.birthdateEditText.setText(it.birthdate)
+                binding.genderSpinner.setSelection(getGenderPosition(it.gender))
+            }
             enableEditMode(false)
         }
 
@@ -147,5 +149,10 @@ class ProfileFragment : Fragment() {
         val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", username = username)
         viewModel.updatePhysicalData(request)
         enableEditMode(false)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -9,6 +9,7 @@ import com.dicoding.kaloriku.data.pref.UserModel
 import com.dicoding.kaloriku.data.response.LoginRequest
 import com.dicoding.kaloriku.data.response.LoginResponse
 import com.dicoding.kaloriku.data.pref.UserRepository
+import com.dicoding.kaloriku.data.response.ProfileResponse
 import com.dicoding.kaloriku.data.retrofit.ApiConfig
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -16,6 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
+
     private val _loginResult = MutableLiveData<LoginResponse?>()
     val loginResult: LiveData<LoginResponse?> = _loginResult
 
@@ -50,6 +52,23 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         })
     }
 
+    fun getUserProfile(token: String, userId: String): LiveData<ProfileResponse?> {
+        val userProfile = MutableLiveData<ProfileResponse?>()
+        viewModelScope.launch {
+            try {
+                val response = repository.getPhysicalData(token, userId)
+                if (response.isSuccessful) {
+                    userProfile.postValue(response.body())
+                } else {
+                    userProfile.postValue(null)
+                }
+            } catch (e: Exception) {
+                userProfile.postValue(null)
+            }
+        }
+        return userProfile
+    }
+
     fun saveSession(user: UserModel) {
         viewModelScope.launch {
             repository.saveSession(user)
@@ -62,11 +81,4 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
-    fun hasPhysicalData(): LiveData<Boolean> {
-        val hasData = MutableLiveData<Boolean>()
-        viewModelScope.launch {
-            hasData.value = repository.hasPhysicalData()
-        }
-        return hasData
-    }
 }
