@@ -57,4 +57,9 @@
     <string name="bmi_caclulation">00.0</string>
     <string name="history">History</string>
     <string name="image_recognation">Image Recognation</string>
+    <string name="image_placeholder">Image Placeholder</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="gallery">gallery</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="food_and_drinks_recognition">Food and Drinks Recognition</string>
 </resources>

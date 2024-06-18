@@ -1,59 +1,129 @@
 package com.dicoding.kaloriku.ui.fragment
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dicoding.kaloriku.R
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.dicoding.kaloriku.databinding.FragmentDashboardBinding
+import com.dicoding.kaloriku.ui.CameraActivity
+import com.dicoding.kaloriku.ui.helper.ImageClassifierHelper
+import java.io.IOException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DashboardFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DashboardFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentDashboardBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var previewImageView: ImageView
+    private lateinit var resultTextView: TextView
+    private lateinit var imageClassifierHelper: ImageClassifierHelper
+
+    companion object {
+        private const val PICK_IMAGE = 1
+        private const val REQUEST_IMAGE_CAPTURE = 2
+        const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        imageClassifierHelper = ImageClassifierHelper(requireContext())
+        imageClassifierHelper.setupImageClassifier()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+    ): View {
+        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        resultTextView = binding.resultText
+        previewImageView = binding.previewImageView
+        val galleryButton = binding.galleryButton
+        val cameraButton = binding.cameraButton
+
+        galleryButton.setOnClickListener { startGallery() }
+        cameraButton.setOnClickListener { startCamera() }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DashboardFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DashboardFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun startGallery() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_PICK
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
+    }
+
+    private fun startCamera() {
+        val intent = Intent(context, CameraActivity::class.java)
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            PICK_IMAGE -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    data.data?.let { uri ->
+                        try {
+                            val image = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+                            previewImageView.setImageBitmap(image)
+                            analyzeImage(image)
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            showToast("Error: Failed to load image")
+                        }
+                    }
                 }
             }
+            REQUEST_IMAGE_CAPTURE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.getStringExtra(EXTRA_CAMERAX_IMAGE)?.let { uriString ->
+                        val uri = Uri.parse(uriString)
+                        try {
+                            val image = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+                            previewImageView.setImageBitmap(image)
+                            analyzeImage(image)
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            showToast("Error: Failed to load image")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun analyzeImage(image: Bitmap) {
+        imageClassifierHelper.setupImageClassifier()
+        val result = imageClassifierHelper.classifyStaticImage(image)
+        displayResult(result)
+    }
+
+    private fun displayResult(result: String) {
+        resultTextView.text = result
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        imageClassifierHelper.close()
     }
 }
