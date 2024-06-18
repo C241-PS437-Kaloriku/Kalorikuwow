@@ -6,8 +6,8 @@
         android:title="@string/home" />
     <item
         android:id="@+id/dashboardFragment"
-        android:icon="@drawable/dashboard_icon"
-        android:title="@string/dashboard" />
+        android:icon="@drawable/camera_icon"
+        android:title="@string/camera" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile_icon"

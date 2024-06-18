@@ -62,4 +62,5 @@
     <string name="gallery">gallery</string>
     <string name="open_gallery">Open Gallery</string>
     <string name="food_and_drinks_recognition">Food and Drinks Recognition</string>
+    <string name="camera">Camera</string>
 </resources>
