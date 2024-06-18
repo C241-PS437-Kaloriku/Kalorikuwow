@@ -198,12 +198,10 @@ class ProfileFragment : Fragment() {
 
     private fun getRealPathFromURI(contentUri: Uri): String? {
         val cursor = requireContext().contentResolver.query(contentUri, null, null, null, null)
-        return if (cursor != null) {
-            cursor.moveToFirst()
-            val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-            cursor.getString(idx)
-        } else {
-            contentUri.path
+        return cursor?.use {
+            it.moveToFirst()
+            val idx = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            it.getString(idx)
         }
     }
 

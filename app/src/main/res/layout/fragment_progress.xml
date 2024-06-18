@@ -33,19 +33,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.441" />
 
-    <ImageView
-        android:id="@+id/camera"
-        android:contentDescription="@string/image_recognation"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/baseline_add_a_photo_24"
-        app:layout_constraintBottom_toTopOf="@+id/poop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.454" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal"
         android:layout_width="wrap_content"
