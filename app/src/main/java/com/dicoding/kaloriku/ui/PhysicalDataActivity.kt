@@ -140,7 +140,7 @@ class PhysicalDataActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                val request = UpdatePhysicalRequest(
+                UpdatePhysicalRequest(
                     binding.weightEditText.text.toString().toInt(),
                     binding.heightEditText.text.toString().toInt(),
                     binding.genderSpinner.selectedItem.toString().lowercase(),

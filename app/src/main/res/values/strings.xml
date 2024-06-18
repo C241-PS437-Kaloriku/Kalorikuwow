@@ -35,7 +35,6 @@
     <string name="birthdate_yyyy_mm_dd">Birthdate (yyyy-mm-dd)</string>
     <string name="login_to_your_account">Login to your account</string>
     <string name="kcal_left_number">0000</string>
-    <string name="kcal_left_number2">00</string>
     <string name="your_current_bmi">Your Current BMI</string>
     <string name="kcal_left">Kcal Left</string>
     <string name="kcal">Kcal</string>

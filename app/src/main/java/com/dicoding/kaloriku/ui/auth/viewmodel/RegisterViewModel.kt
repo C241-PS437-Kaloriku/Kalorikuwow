@@ -10,7 +10,6 @@ import com.dicoding.kaloriku.data.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Date
 
 class RegisterViewModel : ViewModel() {
     private val _registerResult = MutableLiveData<RegisterResponse?>()

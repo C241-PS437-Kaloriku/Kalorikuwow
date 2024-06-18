@@ -42,22 +42,22 @@ class ProgressFragment : Fragment() {
         setupView()
         setupAction()
 
-        viewModel.getSession().observe(viewLifecycleOwner, Observer { user ->
+        viewModel.getSession().observe(viewLifecycleOwner) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(activity, LoginActivity::class.java))
                 activity?.finish()
             }
 
             bmiViewModel.calculateBMI(user.userId)
-        })
+        }
 
-        bmiViewModel.bmiResult.observe(viewLifecycleOwner, Observer { bmiResponse ->
+        bmiViewModel.bmiResult.observe(viewLifecycleOwner) { bmiResponse ->
             bmiResponse?.let {
-                val bmiText = "BMI: ${bmiResponse.bmi}\nCategory: ${bmiResponse.category}"
+                "BMI: ${bmiResponse.bmi}\nCategory: ${bmiResponse.category}"
                 binding.bmiTextView.text = bmiResponse.bmi
                 binding.categoryTextView.text = bmiResponse.category
             }
-        })
+        }
 
         binding.camera.setOnClickListener {
             startActivity(Intent(activity, FoodRecogActivity::class.java))

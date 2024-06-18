@@ -177,7 +177,7 @@
                 android:layout_width="68dp"
                 android:layout_height="38dp"
                 android:fontFamily="@font/inter_bold"
-                android:text="222"
+                android:text="@string/kcal_left_number"
                 android:textAlignment="textEnd"
                 android:textColor="@color/white"
                 android:textSize="30sp"

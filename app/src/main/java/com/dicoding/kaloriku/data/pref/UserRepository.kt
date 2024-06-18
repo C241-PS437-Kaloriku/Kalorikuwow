@@ -1,14 +1,21 @@
 package com.dicoding.kaloriku.data.pref
 
 import android.util.Log
+import com.dicoding.kaloriku.data.response.PhotoProfileResponse
 import com.dicoding.kaloriku.data.response.ProfileResponse
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.data.response.UpdatePhysicalResponse
-import com.dicoding.kaloriku.data.response.UserProfile
 import com.dicoding.kaloriku.data.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
+import java.io.File
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
@@ -39,10 +46,6 @@ class UserRepository private constructor(
         return userPreference.getSession().map { it.userId }
     }
 
-    suspend fun hasPhysicalData(): Boolean {
-        return userPreference.hasPhysicalData()
-    }
-
     suspend fun logout() {
         userPreference.logout()
     }
@@ -54,6 +57,10 @@ class UserRepository private constructor(
     suspend fun updatePhysicalData(request: UpdatePhysicalRequest, token: String): UpdatePhysicalResponse {
         return apiService.updatePhysical(token, request).body()
             ?: throw Exception("Failed to update physical data")
+    }
+
+    suspend fun uploadPhotoProfile(token: String, userId: String, userIdPart: RequestBody, body: MultipartBody.Part): Response<PhotoProfileResponse> {
+        return apiService.uploadPhotoProfile(token, userId, userIdPart, body)
     }
 
     companion object {

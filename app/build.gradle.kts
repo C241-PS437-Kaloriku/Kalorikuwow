@@ -70,4 +70,7 @@ dependencies {
     implementation("androidx.camera:camera-core:1.3.3")
     implementation ("androidx.fragment:fragment-ktx:1.8.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
 }

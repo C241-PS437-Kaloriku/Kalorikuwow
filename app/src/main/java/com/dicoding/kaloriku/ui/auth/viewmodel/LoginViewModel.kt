@@ -12,9 +12,6 @@ import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.data.response.ProfileResponse
 import com.dicoding.kaloriku.data.retrofit.ApiConfig
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 

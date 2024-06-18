@@ -138,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun fetchUserProfile(token: String, userId: String) {
         viewModel.getUserProfile(token, userId).observe(this) { profileResponse ->
-            if (profileResponse != null && profileResponse.user != null) {
+            if (profileResponse?.user != null) {
                 val userProfile = profileResponse.user
                 val intent = if (userProfile.weight != null && userProfile.weight > 0) {
                     Intent(this, MainActivity::class.java)

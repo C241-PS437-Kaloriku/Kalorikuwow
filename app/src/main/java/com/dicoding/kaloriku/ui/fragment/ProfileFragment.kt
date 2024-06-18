@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.dicoding.kaloriku.R
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.databinding.FragmentProfileBinding
@@ -94,7 +96,7 @@ class ProfileFragment : Fragment() {
         return date.matches(regex)
     }
 
-   private fun observeViewModel() {
+    private fun observeViewModel() {
         viewModel.physicalData.observe(viewLifecycleOwner) { data ->
             if (data != null) {
                 binding.usernameEditText.setText(data.username)
@@ -102,11 +104,14 @@ class ProfileFragment : Fragment() {
                 binding.heightEditText.setText(data.height.toString())
                 binding.birthdateEditText.setText(data.birthdate)
                 binding.genderSpinner.setSelection(getGenderPosition(data.gender))
-            }
-            if (data != null) {
+
                 if (!data.profilePictureUrl.isNullOrEmpty()) {
-                    profileImageUri = Uri.parse(data.profilePictureUrl)
-                    binding.profileImageView.setImageURI(profileImageUri)
+                    Glide.with(this)
+                        .load(data.profilePictureUrl)
+                        .error(R.drawable.ic_profile_placeholder)
+                        .into(binding.profileImageView)
+                } else {
+                    binding.profileImageView.setImageResource(R.drawable.ic_profile_placeholder)
                 }
             }
             enableEditMode(false)
@@ -115,20 +120,22 @@ class ProfileFragment : Fragment() {
         viewModel.updateResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess { response ->
                 response.message?.let { message ->
-                    Toast.makeText(
-                        requireContext(),
-                        message,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 }
             }.onFailure { throwable ->
                 throwable.message?.let { errorMessage ->
-                    Toast.makeText(
-                        requireContext(),
-                        "Username already taken: $errorMessage",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), "Failed to update profile: $errorMessage", Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+
+        viewModel.photoUploadResult.observe(viewLifecycleOwner) { result ->
+            result.onSuccess { response ->
+                Toast.makeText(requireContext(), response.message ?: "Photo uploaded successfully", Toast.LENGTH_SHORT).show()
+                viewModel.loadPhysicalData() // Refresh profile data after successful upload
+            }.onFailure { throwable ->
+                Log.e("ProfileFragment", "Error uploading photo", throwable)
+                Toast.makeText(requireContext(), "Failed to upload photo: ${throwable.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -155,7 +162,7 @@ class ProfileFragment : Fragment() {
         val height = binding.heightEditText.text.toString().toIntOrNull()
         val gender = binding.genderSpinner.selectedItem.toString().lowercase()
         val birthdate = binding.birthdateEditText.text.toString()
-        val profilePictureUrl = profileImageUri?.toString() ?: null
+        val profilePictureUrl = profileImageUri?.toString()
 
         if (weight == null || height == null) {
             Toast.makeText(requireContext(), "Please enter valid weight and height", Toast.LENGTH_SHORT).show()
@@ -171,9 +178,21 @@ class ProfileFragment : Fragment() {
         viewModel.updatePhysicalData(request)
         enableEditMode(false)
     }
+
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         resultLauncher.launch(intent)
+    }
+
+    private fun getRealPathFromURI(contentUri: Uri): String? {
+        val cursor = requireContext().contentResolver.query(contentUri, null, null, null, null)
+        return if (cursor != null) {
+            cursor.moveToFirst()
+            val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            cursor.getString(idx)
+        } else {
+            contentUri.path
+        }
     }
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -189,10 +208,25 @@ class ProfileFragment : Fragment() {
                         ImageDecoder.decodeBitmap(source)
                     }
                     binding.profileImageView.setImageBitmap(bitmap)
+
+                    profileImageUri?.let {
+                        val realPath = getRealPathFromURI(it)
+                        if (realPath != null) {
+                            viewModel.uploadPhotoProfile(realPath)
+                        } else {
+                            Toast.makeText(requireContext(), "Failed to get image path", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    Toast.makeText(requireContext(), "Error loading image: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
