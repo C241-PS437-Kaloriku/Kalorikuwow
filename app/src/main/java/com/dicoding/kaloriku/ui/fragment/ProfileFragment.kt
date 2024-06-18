@@ -105,13 +105,16 @@ class ProfileFragment : Fragment() {
                 binding.birthdateEditText.setText(data.birthdate)
                 binding.genderSpinner.setSelection(getGenderPosition(data.gender))
 
+                // Selalu tampilkan placeholder terlebih dahulu
+                binding.profileImageView.setImageResource(R.drawable.ic_profile_placeholder)
+
+                // Periksa dan muat URL foto profil
                 if (!data.profilePictureUrl.isNullOrEmpty()) {
-                    Glide.with(this)
+                    Glide.with(requireContext())
                         .load(data.profilePictureUrl)
-                        .error(R.drawable.ic_profile_placeholder)
+                        .placeholder(R.drawable.ic_profile_placeholder) // Placeholder saat memuat
+                        .error(R.drawable.ic_profile_placeholder) // Gambar error
                         .into(binding.profileImageView)
-                } else {
-                    binding.profileImageView.setImageResource(R.drawable.ic_profile_placeholder)
                 }
             }
             enableEditMode(false)
@@ -124,18 +127,30 @@ class ProfileFragment : Fragment() {
                 }
             }.onFailure { throwable ->
                 throwable.message?.let { errorMessage ->
-                    Toast.makeText(requireContext(), "Failed to update profile: $errorMessage", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to update profile: $errorMessage",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
 
         viewModel.photoUploadResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess { response ->
-                Toast.makeText(requireContext(), response.message ?: "Photo uploaded successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    response.message ?: "Photo uploaded successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
                 viewModel.loadPhysicalData() // Refresh profile data after successful upload
             }.onFailure { throwable ->
                 Log.e("ProfileFragment", "Error uploading photo", throwable)
-                Toast.makeText(requireContext(), "Failed to upload photo: ${throwable.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to upload photo: ${throwable.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -162,7 +177,7 @@ class ProfileFragment : Fragment() {
         val height = binding.heightEditText.text.toString().toIntOrNull()
         val gender = binding.genderSpinner.selectedItem.toString().lowercase()
         val birthdate = binding.birthdateEditText.text.toString()
-        val profilePictureUrl = profileImageUri?.toString()
+        val profilePictureUrl = profileImageUri?.toString() ?: viewModel.physicalData.value?.profilePictureUrl
 
         if (weight == null || height == null) {
             Toast.makeText(requireContext(), "Please enter valid weight and height", Toast.LENGTH_SHORT).show()

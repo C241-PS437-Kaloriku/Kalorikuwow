@@ -26,8 +26,8 @@ data class UserProfile(
 	@field:SerializedName("height")
 	val height: Int? = null,
 
-	@field:SerializedName("profilePictureUrl")
-	val profilePictureUrl: String?,
+	@SerializedName("photoprofile")
+	val profilePictureUrl: String?
 )
 
 data class ProfileResponse(

@@ -16,7 +16,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL", "\"https://ujicoba-kaloriku.et.r.appspot.com/\"")
+        buildConfigField("String", "BASE_URL", "\"https://kaloriku-service-ib4kqy5v5q-et.a.run.app/\"")
     }
 
     buildTypes {

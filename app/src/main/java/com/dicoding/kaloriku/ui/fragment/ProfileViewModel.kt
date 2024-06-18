@@ -43,7 +43,13 @@ class ProfileViewModel(
 
                 if (response.isSuccessful) {
                     val profileResponse = response.body()
-                    _physicalData.value = profileResponse?.user
+                    if (profileResponse != null) {
+                        Log.d("ProfileViewModel", "Profile picture URL: ${profileResponse.user?.profilePictureUrl}")
+                        _physicalData.value = profileResponse.user
+                    } else {
+                        _physicalData.value = null
+                        Log.e("ProfileViewModel", "Profile response is null")
+                    }
                 } else {
                     _physicalData.value = null
                     Log.e("ProfileViewModel", "Error loading physical data: ${response.errorBody()?.string()}")
@@ -55,6 +61,7 @@ class ProfileViewModel(
         }
     }
 
+
     fun updatePhysicalData(request: UpdatePhysicalRequest) {
         viewModelScope.launch {
             try {
@@ -63,7 +70,8 @@ class ProfileViewModel(
                 val response = userRepository.updatePhysicalData(request.copy(userId = userId), token)
 
                 _updateResult.value = Result.success(response)
-                _physicalData.value = request.toUserProfile()
+                // Muat ulang data profil setelah pembaruan berhasil
+                loadPhysicalData()
             } catch (e: Exception) {
                 _updateResult.value = Result.failure(e)
             }
