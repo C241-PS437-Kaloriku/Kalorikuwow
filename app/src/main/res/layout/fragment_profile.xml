@@ -235,6 +235,7 @@
 
     <ImageView
         android:id="@+id/logo"
+        android:contentDescription="@string/kaloriku"
         android:layout_width="206dp"
         android:layout_height="32dp"
         android:layout_gravity="center"

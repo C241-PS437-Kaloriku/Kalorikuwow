@@ -70,7 +70,6 @@ class ProfileViewModel(
                 val response = userRepository.updatePhysicalData(request.copy(userId = userId), token)
 
                 _updateResult.value = Result.success(response)
-                // Muat ulang data profil setelah pembaruan berhasil
                 loadPhysicalData()
             } catch (e: Exception) {
                 _updateResult.value = Result.failure(e)
@@ -103,7 +102,7 @@ class ProfileViewModel(
 
                 if (response.isSuccessful) {
                     _photoUploadResult.value = Result.success(response.body()!!)
-                    loadPhysicalData()  // Refresh the profile data
+                    loadPhysicalData()
                 } else {
                     val errorMessage = "Failed to upload photo: ${response.code()} - ${response.errorBody()?.string() ?: "Unknown error"}"
                     _photoUploadResult.value = Result.failure(Exception(errorMessage))

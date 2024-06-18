@@ -104,16 +104,13 @@ class ProfileFragment : Fragment() {
                 binding.heightEditText.setText(data.height.toString())
                 binding.birthdateEditText.setText(data.birthdate)
                 binding.genderSpinner.setSelection(getGenderPosition(data.gender))
-
-                // Selalu tampilkan placeholder terlebih dahulu
                 binding.profileImageView.setImageResource(R.drawable.ic_profile_placeholder)
 
-                // Periksa dan muat URL foto profil
                 if (!data.profilePictureUrl.isNullOrEmpty()) {
                     Glide.with(requireContext())
                         .load(data.profilePictureUrl)
-                        .placeholder(R.drawable.ic_profile_placeholder) // Placeholder saat memuat
-                        .error(R.drawable.ic_profile_placeholder) // Gambar error
+                        .placeholder(R.drawable.ic_profile_placeholder)
+                        .error(R.drawable.ic_profile_placeholder)
                         .into(binding.profileImageView)
                 }
             }
@@ -143,7 +140,7 @@ class ProfileFragment : Fragment() {
                     response.message ?: "Photo uploaded successfully",
                     Toast.LENGTH_SHORT
                 ).show()
-                viewModel.loadPhysicalData() // Refresh profile data after successful upload
+                viewModel.loadPhysicalData()
             }.onFailure { throwable ->
                 Log.e("ProfileFragment", "Error uploading photo", throwable)
                 Toast.makeText(
