@@ -153,10 +153,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
-
     private fun showErrorDialog() {
         AlertDialog.Builder(this).apply {
             setTitle("Gagal Melakukan Login")
