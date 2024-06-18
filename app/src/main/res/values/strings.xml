@@ -55,4 +55,6 @@
     <string name="birth">Birth</string>
     <string name="name">Name</string>
     <string name="bmi_caclulation">00.0</string>
+    <string name="history">History</string>
+    <string name="image_recognation">Image Recognation</string>
 </resources>

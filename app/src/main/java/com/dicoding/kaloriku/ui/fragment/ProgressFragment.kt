@@ -11,7 +11,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.dicoding.kaloriku.databinding.FragmentProgressBinding
 import com.dicoding.kaloriku.ui.FoodRecogActivity
 import com.dicoding.kaloriku.ui.MainViewModel
@@ -32,7 +31,7 @@ class ProgressFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentProgressBinding.inflate(inflater, container, false)
         return binding.root
     }
