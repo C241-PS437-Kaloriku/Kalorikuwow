@@ -11,6 +11,7 @@ import com.dicoding.kaloriku.data.response.ProfileResponse
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.data.response.UpdatePhysicalResponse
 import com.dicoding.kaloriku.data.response.UserProfile
+import com.dicoding.kaloriku.utils.ImageUtils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -76,11 +77,16 @@ class ProfileViewModel(
             }
         }
     }
-
     fun uploadPhotoProfile(photoPath: String) {
         viewModelScope.launch {
             try {
-                val file = File(photoPath)
+                var file = File(photoPath)
+                val maxSize = 1 * 1024 * 1024
+
+                if (file.length() > maxSize) {
+                    file = ImageUtils.compressImageFile(file, maxSize)
+                }
+
                 val mimeType = getMimeType(file.name)
                 if (mimeType != "image/jpeg" && mimeType != "image/png") {
                     throw Exception("File must be JPEG or PNG")
@@ -92,7 +98,6 @@ class ProfileViewModel(
                 val body = MultipartBody.Part.createFormData("profilePicture", file.name, requestFile)
                 val userIdPart = userId.toRequestBody("text/plain".toMediaTypeOrNull())
 
-                // Logging the details
                 Log.d("ProfileViewModel", "Token: $token")
                 Log.d("ProfileViewModel", "UserId as query: $userId")
                 Log.d("ProfileViewModel", "UserId as form-data: ${userIdPart.string()}")
@@ -114,7 +119,6 @@ class ProfileViewModel(
             }
         }
     }
-
     private fun RequestBody.string(): String {
         val buffer = okio.Buffer()
         this.writeTo(buffer)
@@ -128,6 +132,7 @@ class ProfileViewModel(
             else -> null
         }
     }
+
 
     private fun UpdatePhysicalRequest.toUserProfile(): UserProfile {
         return UserProfile(
