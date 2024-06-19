@@ -22,7 +22,9 @@ import com.bumptech.glide.Glide
 import com.dicoding.kaloriku.R
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.databinding.FragmentProfileBinding
+import com.dicoding.kaloriku.ui.MainViewModel
 import com.dicoding.kaloriku.ui.ViewModelFactory
+import com.dicoding.kaloriku.ui.auth.LoginActivity
 import java.io.IOException
 import java.util.*
 
@@ -32,6 +34,10 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ProfileViewModel by viewModels {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
+    private val mainViewModel: MainViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
     }
 
@@ -62,6 +68,17 @@ class ProfileFragment : Fragment() {
                 saveData()
             } else {
                 enableEditMode(true)
+            }
+        }
+
+        binding.logoutButton.setOnClickListener {
+            mainViewModel.logout()
+        }
+
+        mainViewModel.getSession().observe(viewLifecycleOwner) { user ->
+            if (!user.isLogin) {
+                startActivity(Intent(activity, LoginActivity::class.java))
+                activity?.finish()
             }
         }
 

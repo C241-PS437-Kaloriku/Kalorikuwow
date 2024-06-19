@@ -228,19 +228,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bmistatus"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
-    <Button
-        android:id="@+id/logoutButton"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/purple"
-        android:text="@string/logout"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

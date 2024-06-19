@@ -38,7 +38,6 @@ class ProgressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
-        setupAction()
 
         viewModel.getSession().observe(viewLifecycleOwner) { user ->
             if (!user.isLogin) {
@@ -51,7 +50,6 @@ class ProgressFragment : Fragment() {
 
         bmiViewModel.bmiResult.observe(viewLifecycleOwner) { bmiResponse ->
             bmiResponse?.let {
-                "BMI: ${bmiResponse.bmi}\nCategory: ${bmiResponse.category}"
                 binding.bmiTextView.text = bmiResponse.bmi
                 binding.categoryTextView.text = bmiResponse.category
             }
@@ -71,14 +69,9 @@ class ProgressFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.hide()
     }
 
-    private fun setupAction() {
-        binding.logoutButton.setOnClickListener {
-            viewModel.logout()
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+

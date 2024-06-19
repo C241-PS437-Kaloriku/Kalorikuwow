@@ -90,10 +90,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/birthdate"
-            android:inputType="date"
+            android:focusable="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            app:startIconTint="@color/black"/>
+            android:inputType="date"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -139,6 +139,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:visibility="invisible" />
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
@@ -147,6 +148,7 @@
         android:layout_marginTop="70dp"
         android:src="@drawable/logo"
         android:textSize="35sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:contentDescription="@string/kaloriku" />
 
 </LinearLayout>

@@ -22,7 +22,40 @@
         app:layout_constraintBottom_toTopOf="@id/logo"
         app:layout_constraintVertical_bias="0">
 
+        <LinearLayout
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_logout"
+                android:contentDescription="@string/logout"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/btnLogoutTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logout"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_semibold"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+
+
         <TextView
+            android:id="@+id/profileTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile"
@@ -30,7 +63,8 @@
             android:textStyle="bold"
             android:layout_gravity="center"
             android:paddingBottom="16dp"
-            android:fontFamily="@font/inter_bold"/>
+            android:fontFamily="@font/inter_bold"
+            android:layout_marginTop="16dp"/>
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profileImageView"

@@ -130,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/birthdate"
                 android:focusable="false"
+                android:inputType="date"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"/>
         </com.google.android.material.textfield.TextInputLayout>

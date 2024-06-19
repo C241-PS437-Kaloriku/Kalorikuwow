@@ -63,7 +63,6 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        // Validasi panjang password minimal 8 karakter
         binding.passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
