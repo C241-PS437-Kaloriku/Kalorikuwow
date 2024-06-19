@@ -135,6 +135,26 @@
                 android:paddingEnd="16dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/goalEditTextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginTop="16dp"
+            app:startIconDrawable="@drawable/ic_baseline_flag_24"
+            app:startIconTint="@color/black">
+
+            <Spinner
+                android:id="@+id/goalSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <Button
             android:id="@+id/btnSave"

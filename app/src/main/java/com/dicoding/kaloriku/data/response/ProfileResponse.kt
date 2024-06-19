@@ -23,11 +23,15 @@ data class UserProfile(
 
 	@SerializedName("username")
 	val username: String? = null,
+
 	@field:SerializedName("height")
 	val height: Int? = null,
 
 	@SerializedName("photoprofile")
-	val profilePictureUrl: String?
+	val profilePictureUrl: String?,
+
+	@SerializedName("goal")
+	val goal: String,
 )
 
 data class ProfileResponse(

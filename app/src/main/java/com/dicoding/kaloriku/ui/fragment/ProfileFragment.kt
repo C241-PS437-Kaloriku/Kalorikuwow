@@ -56,6 +56,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupGenderSpinner()
+        setupGoalSpinner()
         setupBirthdatePicker()
         observeViewModel()
 
@@ -92,6 +93,13 @@ class ProfileFragment : Fragment() {
         binding.genderSpinner.adapter = genderAdapter
     }
 
+    private fun setupGoalSpinner() {
+        val goalOptions = resources.getStringArray(R.array.goal_options)
+        val goalAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, goalOptions)
+        goalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.goalSpinner.adapter = goalAdapter
+    }
+
     private fun setupBirthdatePicker() {
         binding.birthdateEditText.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -121,6 +129,7 @@ class ProfileFragment : Fragment() {
                 binding.heightEditText.setText(data.height.toString())
                 binding.birthdateEditText.setText(data.birthdate)
                 binding.genderSpinner.setSelection(getGenderPosition(data.gender))
+                binding.goalSpinner.setSelection(getGoalPosition(data.goal))
                 binding.profileImageView.setImageResource(R.drawable.ic_profile_placeholder)
 
                 if (!data.profilePictureUrl.isNullOrEmpty()) {
@@ -174,6 +183,11 @@ class ProfileFragment : Fragment() {
         return genderOptions.indexOfFirst { it.equals(gender, true) }
     }
 
+    private fun getGoalPosition(goal: String): Int {
+        val goalOptions = resources.getStringArray(R.array.goal_options)
+        return goalOptions.indexOfFirst { it.equals(goal, true) }
+    }
+
     private fun enableEditMode(enable: Boolean) {
         isEditMode = enable
         binding.weightEditText.isEnabled = enable
@@ -181,6 +195,7 @@ class ProfileFragment : Fragment() {
         binding.birthdateEditText.isEnabled = enable
         binding.usernameEditText.isEnabled = enable
         binding.genderSpinner.isEnabled = enable
+        binding.goalSpinner.isEnabled = enable
 
         binding.btnSave.text = if (enable) getString(R.string.save) else getString(R.string.edit)
     }
@@ -191,6 +206,7 @@ class ProfileFragment : Fragment() {
         val height = binding.heightEditText.text.toString().toIntOrNull()
         val gender = binding.genderSpinner.selectedItem.toString().lowercase()
         val birthdate = binding.birthdateEditText.text.toString()
+        val goal = binding.goalSpinner.selectedItem.toString().lowercase()
         val profilePictureUrl = profileImageUri?.toString() ?: viewModel.physicalData.value?.profilePictureUrl
 
         if (weight == null || height == null) {
@@ -203,7 +219,7 @@ class ProfileFragment : Fragment() {
             return
         }
 
-        val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", username = username, profilePictureUrl = profilePictureUrl)
+        val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", username = username, profilePictureUrl = profilePictureUrl, goal = goal)
         viewModel.updatePhysicalData(request)
         enableEditMode(false)
     }
