@@ -1,5 +1,7 @@
 package com.dicoding.kaloriku.data.retrofit
 
+import FoodRecommendationRequest
+import FoodRecommendationResponse
 import com.dicoding.kaloriku.data.response.BMIResponse
 import com.dicoding.kaloriku.data.response.LoginRequest
 import com.dicoding.kaloriku.data.response.LoginResponse
