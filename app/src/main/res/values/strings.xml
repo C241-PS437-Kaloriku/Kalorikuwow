@@ -66,8 +66,8 @@
     <string name="profile_lowercase">Profile</string>
     <string name="goal">Goal</string>
     <string-array name="goal_options">
-        <item>maintain</item>
-        <item>increase</item>
-        <item>decrease</item>
+        <item>Maintain</item>
+        <item>Increase</item>
+        <item>Decrease</item>
     </string-array>
 </resources>
