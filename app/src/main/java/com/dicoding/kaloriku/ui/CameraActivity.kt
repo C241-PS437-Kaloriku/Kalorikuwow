@@ -180,6 +180,7 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onStart() {
         super.onStart()
         orientationEventListener.enable()

@@ -32,13 +32,13 @@ interface ApiService {
         @Body loginRequest: LoginRequest
     ): Call<LoginResponse>
 
-    @GET("profile/")
+    @GET("profile")
     suspend fun getPhysicalData(
         @Header("Authorization") token: String,
         @Query("userId") userId: String
     ): Response<ProfileResponse>
 
-    @PUT("profile/")
+    @PUT("profile")
     suspend fun updatePhysical(
         @Header("Authorization") token: String,
         @Body updatePhysicalRequest: UpdatePhysicalRequest

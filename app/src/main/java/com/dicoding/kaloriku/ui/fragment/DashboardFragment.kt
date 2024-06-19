@@ -3,6 +3,9 @@ package com.dicoding.kaloriku.ui.fragment
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -103,8 +106,28 @@ class DashboardFragment : Fragment() {
 
     private fun loadBitmapFromUri(uri: Uri): Bitmap {
         val contentResolver = requireContext().contentResolver
-        return MediaStore.Images.Media.getBitmap(contentResolver, uri)
+        val inputStream = contentResolver.openInputStream(uri)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+
+        inputStream?.close()
+
+        val exif = ExifInterface(contentResolver.openInputStream(uri)!!)
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+        return when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap, 90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(bitmap, 180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap, 270f)
+            else -> bitmap
+        }
     }
+
+    private fun rotateImage(source: Bitmap, angle: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(angle)
+        return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+    }
+
 
     private fun analyzeImage(image: Bitmap) {
         imageClassifierHelper.setupImageClassifier()
