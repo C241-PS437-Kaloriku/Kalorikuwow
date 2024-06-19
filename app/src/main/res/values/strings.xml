@@ -65,4 +65,10 @@
     <string name="food_and_drinks_recognition">Food and Drinks Recognition</string>
     <string name="camera">Camera</string>
     <string name="profile_lowercase">Profile</string>
+    <string name="goal">Goal</string>
+    <string-array name="goal_options">
+        <item>Maintain</item>
+        <item>Increase</item>
+        <item>Decrease</item>
+    </string-array>
 </resources>

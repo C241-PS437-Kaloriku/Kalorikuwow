@@ -29,6 +29,7 @@ class PhysicalDataActivity : AppCompatActivity() {
         setupAction()
         setupTextWatchers()
         setupGenderSpinner()
+        setupGoalSpinner()
         setupDatePicker()
         observeViewModel()
     }
@@ -44,6 +45,12 @@ class PhysicalDataActivity : AppCompatActivity() {
         val genderAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderOptions)
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.genderSpinner.adapter = genderAdapter
+    }
+    private fun setupGoalSpinner() {
+        val goalOptions = resources.getStringArray(R.array.goal_options)
+        val goalAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, goalOptions)
+        goalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.goalSpinner.adapter = goalAdapter
     }
 
     private fun setupDatePicker() {
@@ -114,6 +121,7 @@ class PhysicalDataActivity : AppCompatActivity() {
             val gender = binding.genderSpinner.selectedItem.toString().lowercase()
             val birthdate = binding.birthdateEditText.text.toString()
             val username = binding.usernameEditText.text.toString()
+            val goal = binding.goalSpinner.selectedItem.toString().lowercase()
 
             if (weight == null || height == null) {
                 Toast.makeText(this, "Please enter valid weight and height", Toast.LENGTH_SHORT).show()
@@ -125,7 +133,7 @@ class PhysicalDataActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", username = username)
+            val request = UpdatePhysicalRequest(weight, height, gender, birthdate, userId = "", username = username, goal = goal)
             viewModel.getTokenAndUpdatePhysicalData(request)
         }
     }
@@ -139,16 +147,6 @@ class PhysicalDataActivity : AppCompatActivity() {
                     "Physical Data updated: ${response.message}",
                     Toast.LENGTH_SHORT
                 ).show()
-
-                UpdatePhysicalRequest(
-                    binding.weightEditText.text.toString().toInt(),
-                    binding.heightEditText.text.toString().toInt(),
-                    binding.genderSpinner.selectedItem.toString().lowercase(),
-                    binding.birthdateEditText.text.toString(),
-                    userId = "",
-                    binding.usernameEditText.text.toString(),
-                )
-
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()

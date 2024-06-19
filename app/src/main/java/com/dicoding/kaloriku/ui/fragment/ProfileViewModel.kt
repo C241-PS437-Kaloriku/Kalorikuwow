@@ -144,7 +144,8 @@ class ProfileViewModel(
             gender = this.gender,
             birthdate = this.birthdate,
             age = null,
-            profilePictureUrl = this.profilePictureUrl
+            profilePictureUrl = this.profilePictureUrl,
+            goal = this.goal
         )
     }
 }
