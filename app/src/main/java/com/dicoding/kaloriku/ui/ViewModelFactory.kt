@@ -1,16 +1,21 @@
 package com.dicoding.kaloriku.ui
 
+import AppDatabase
+import FoodItemDao
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.dicoding.kaloriku.data.di.Injection
 import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
+import com.dicoding.kaloriku.ui.auth.viewmodel.FoodSelectionViewModel
 import com.dicoding.kaloriku.ui.auth.viewmodel.LoginViewModel
 import com.dicoding.kaloriku.ui.fragment.ProfileViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
+    private val foodItemDao: FoodItemDao // Add FoodItemDao as a parameter
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -26,10 +31,13 @@ class ViewModelFactory(
                 PhysicalDataViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(BMIViewModel::class.java) -> {
-                BMIViewModel(userRepository) as T // Pass apiService here
+                BMIViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(FoodSelectionViewModel::class.java) -> {
+                FoodSelectionViewModel(foodItemDao) as T // Create FoodSelectionViewModel with FoodItemDao
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
@@ -38,11 +46,13 @@ class ViewModelFactory(
     companion object {
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
+
         @JvmStatic
         fun getInstance(context: Context): ViewModelFactory {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: ViewModelFactory(
                     Injection.provideUserRepository(context),
+                    Injection.provideFoodItemDao(context)
                 ).also { INSTANCE = it }
             }
         }

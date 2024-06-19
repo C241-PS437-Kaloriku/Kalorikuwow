@@ -203,7 +203,7 @@
                 android:text="@string/bmistatus"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -231,4 +231,160 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/poopt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/recommendbackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Breakfast Section -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/recommendfoodbackground"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/breakfastTitle"
+                    android:layout_width="203dp"
+                    android:layout_height="47dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:paddingStart="10dp"
+                    android:text="Breakfast"
+                    android:textColor="@android:color/white"
+                    android:textSize="38sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/breakfastDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Choose a food for breakfast"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/breakfastTitle"/>
+
+                <ImageButton
+                    android:id="@+id/addBreakfastButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/plusbutton"
+                    android:contentDescription="Add Breakfast"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.75" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Lunch Section -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/recommendfoodbackground"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/lunchTitle"
+                    android:layout_width="181dp"
+                    android:layout_height="42dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:paddingStart="10dp"
+                    android:text="Lunch"
+                    android:textColor="@android:color/white"
+                    android:textSize="38sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/lunchDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="8dp"
+                    android:text="Choose a food for lunch"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lunchTitle" />
+
+                <ImageButton
+                    android:id="@+id/addLunchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/plusbutton"
+                    android:contentDescription="Add Lunch"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.75"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Dinner Section -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/recommendfoodbackground"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/dinnerTitle"
+                    android:layout_width="175dp"
+                    android:layout_height="45dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:paddingStart="10dp"
+                    android:text="Dinner"
+                    android:textColor="@android:color/white"
+                    android:textSize="38sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/dinnerDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Choose a food for dinner"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dinnerTitle"/>
+
+                <ImageButton
+                    android:id="@+id/addDinnerButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/plusbutton"
+                    android:contentDescription="Add Dinner"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
