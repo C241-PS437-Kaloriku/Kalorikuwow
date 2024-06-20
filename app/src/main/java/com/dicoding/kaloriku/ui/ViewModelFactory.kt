@@ -13,7 +13,7 @@ import com.dicoding.kaloriku.ui.fragment.ProfileViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
-    private val foodItemDao: FoodItemDao // Add FoodItemDao as a parameter
+    private val foodItemDao: FoodItemDao
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
