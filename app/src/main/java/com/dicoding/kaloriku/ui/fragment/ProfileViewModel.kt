@@ -62,12 +62,6 @@ class ProfileViewModel(
         }
     }
 
-    private fun handleUpdateFailure(e: Exception) {
-        _updateResult.value = Result.failure(e)
-        Log.e("ProfileViewModel", "Error updating physical data", e)
-        loadPhysicalData() // GET ulang data profil setelah kegagalan update
-    }
-
 
     fun updatePhysicalData(request: UpdatePhysicalRequest) {
         viewModelScope.launch {

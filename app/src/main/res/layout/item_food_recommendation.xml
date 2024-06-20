@@ -7,6 +7,7 @@
 
     <ImageView
         android:id="@+id/foodImageView"
+        android:contentDescription="@string/food_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:text="Food Name" />
+            android:text="@string/food_name" />
 
         <TextView
             android:id="@+id/caloriesTextView"
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="12sp"
-            android:text="Calories: 0 kcal" />
+            android:text="@string/calories_0_kcal" />
 
     </LinearLayout>
 
