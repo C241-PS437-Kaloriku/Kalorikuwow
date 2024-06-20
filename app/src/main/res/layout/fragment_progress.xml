@@ -272,7 +272,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -285,25 +285,49 @@
         app:layout_constraintTop_toBottomOf="@+id/poopt"
         app:layout_constraintVertical_bias="0.033">
 
-        <Button
+        <ImageView
             android:id="@+id/previousDayButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="back" />
+            android:layout_width="21dp"
+            android:layout_height="25dp"
+            android:background="@drawable/backleft"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/dateessss"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_baseline_date_range_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dateTextView"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/previousDayButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.545" />
 
         <TextView
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="68dp"
+            android:fontFamily="@font/inter_bold"
             android:padding="8dp"
-            android:text="8th June 2024" />
+            android:text="8th June 2024"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextDayButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <Button
+        <ImageView
             android:id="@+id/nextDayButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="forw" />
-    </LinearLayout>
+            android:layout_width="21dp"
+            android:layout_height="25dp"
+            android:background="@drawable/backright"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:id="@+id/scrollView"
