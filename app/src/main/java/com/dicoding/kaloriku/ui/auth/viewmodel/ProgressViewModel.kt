@@ -26,7 +26,6 @@ class ProgressViewModel(
     private val _dailyConsumption = _selectedDate.switchMap { date ->
         dailyConsumptionDao.getConsumptionForDate(date).asLiveData()
     }
-
     private val _dailyCaloriesNeeded = MutableLiveData(0.0)
     val dailyCaloriesNeeded: LiveData<Double> = _dailyCaloriesNeeded
 
