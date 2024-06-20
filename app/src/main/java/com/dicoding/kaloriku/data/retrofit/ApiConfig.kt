@@ -10,6 +10,7 @@ class ApiConfig {
     companion object {
 
         private const val BASE_URL = BuildConfig.BASE_URL
+        private const val PREDICT_BASE_URL = BuildConfig.PREDICT_BASE_URL
 
         fun getApiService(token: String? = null): ApiService {
             val loggingInterceptor = if (BuildConfig.DEBUG)
@@ -33,6 +34,34 @@ class ApiConfig {
 
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(ApiService::class.java)
+        }
+
+        fun getPredictService(token: String? = null): ApiService {
+            val loggingInterceptor = if (BuildConfig.DEBUG)
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            else
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+
+            val clientBuilder = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+
+            token?.let {
+                clientBuilder.addInterceptor { chain ->
+                    val newRequest = chain.request().newBuilder()
+                        .addHeader("Authorization", it)
+                        .build()
+                    chain.proceed(newRequest)
+                }
+            }
+
+            val client = clientBuilder.build()
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl(PREDICT_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

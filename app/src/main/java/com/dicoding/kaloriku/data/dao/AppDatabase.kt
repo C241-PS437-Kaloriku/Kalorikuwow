@@ -1,9 +1,11 @@
-import android.content.Context
+package com.dicoding.kaloriku.data.dao
+
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import android.content.Context
+import com.dicoding.kaloriku.data.response.FoodItemEntity
 
-// AppDatabase.kt
 @Database(entities = [FoodItemEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 

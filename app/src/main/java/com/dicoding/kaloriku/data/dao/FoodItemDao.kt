@@ -1,10 +1,12 @@
-import androidx.lifecycle.LiveData
+package com.dicoding.kaloriku.data.dao
+
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.dicoding.kaloriku.data.response.FoodItemEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FoodItemDao {
@@ -19,4 +21,7 @@ interface FoodItemDao {
 
 	@Query("SELECT * FROM food_items")
 	suspend fun getAllFoodItems(): List<FoodItemEntity>
+
+	@Query("SELECT * FROM food_items")
+	fun getAllFoodItemsFlow(): Flow<List<FoodItemEntity>>
 }

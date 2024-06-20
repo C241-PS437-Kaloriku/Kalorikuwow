@@ -1,3 +1,5 @@
+package com.dicoding.kaloriku.data.response
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
