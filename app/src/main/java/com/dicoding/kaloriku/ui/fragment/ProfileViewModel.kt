@@ -62,6 +62,12 @@ class ProfileViewModel(
         }
     }
 
+    private fun handleUpdateFailure(e: Exception) {
+        _updateResult.value = Result.failure(e)
+        Log.e("ProfileViewModel", "Error updating physical data", e)
+        loadPhysicalData() // GET ulang data profil setelah kegagalan update
+    }
+
 
     fun updatePhysicalData(request: UpdatePhysicalRequest) {
         viewModelScope.launch {
@@ -131,21 +137,5 @@ class ProfileViewModel(
             "png" -> "image/png"
             else -> null
         }
-    }
-
-
-    private fun UpdatePhysicalRequest.toUserProfile(): UserProfile {
-        return UserProfile(
-            userId = this.userId,
-            username = this.username,
-            email = "",
-            weight = this.weight,
-            height = this.height,
-            gender = this.gender,
-            birthdate = this.birthdate,
-            age = null,
-            profilePictureUrl = this.profilePictureUrl,
-            goal = this.goal
-        )
     }
 }

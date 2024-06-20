@@ -3,6 +3,7 @@ package com.dicoding.kaloriku.data.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -32,9 +33,10 @@ class FoodRecommendationAdapter(
     }
 
     inner class FoodRecommendationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val foodImageView: ImageView = itemView.findViewById(R.id.foodImageViews)
+        private val foodImageView: ImageView = itemView.findViewById(R.id.foodImageView)
         private val foodNameTextView: TextView = itemView.findViewById(R.id.foodNameTextView)
         private val caloriesTextView: TextView = itemView.findViewById(R.id.caloriesTextView)
+        private val addButton: ImageButton = itemView.findViewById(R.id.addButton)
 
         init {
             itemView.setOnClickListener {
@@ -48,6 +50,14 @@ class FoodRecommendationAdapter(
         fun bind(foodItem: FoodItem) {
             foodNameTextView.text = foodItem.name
             caloriesTextView.text = "Calories: ${foodItem.calories} kcal"
+
+            addButton.setOnClickListener {
+                onItemClick(foodItem)
+            }
+
+            itemView.setOnClickListener {
+                onItemClick(foodItem)
+            }
 
             Glide.with(itemView)
                 .load(foodItem.image)

@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.kaloriku.R
 import com.dicoding.kaloriku.data.dao.AppDatabase
 import com.dicoding.kaloriku.data.adapter.FoodRecommendationAdapter
 import com.dicoding.kaloriku.data.dao.FoodItemDao
@@ -51,6 +52,8 @@ class FoodSelectionDialogFragment : DialogFragment() {
         setupRecyclerView()
         fetchFoodRecommendations()
         observeDatabaseChanges()
+
+        setStyle(STYLE_NO_FRAME, R.style.DialogAnimationStyle)
     }
 
     private fun setupRecyclerView() {
