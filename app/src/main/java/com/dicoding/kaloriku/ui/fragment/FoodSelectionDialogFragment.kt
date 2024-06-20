@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +25,7 @@ import com.dicoding.kaloriku.ui.ViewModelFactory
 import com.dicoding.kaloriku.ui.auth.viewmodel.FoodSelectionViewModel
 import com.dicoding.kaloriku.ui.helper.FoodRecommendationHelper
 import kotlinx.coroutines.launch
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -35,6 +38,10 @@ class FoodSelectionDialogFragment : DialogFragment() {
     private val sviewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
+
+    private val _selectedDate = MutableLiveData<String>()
+    val selectedDate: LiveData<String> = _selectedDate
+
     private lateinit var foodItemDao: FoodItemDao
     private lateinit var adapter: FoodRecommendationAdapter
     private lateinit var foodRecommendationHelper: FoodRecommendationHelper
@@ -71,7 +78,6 @@ class FoodSelectionDialogFragment : DialogFragment() {
         // Initialize ProfileViewModel to fetch user's profile data
         profileViewModel = ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
         observeProfileData()
-
         setupRecyclerView()
     }
 
@@ -112,20 +118,37 @@ class FoodSelectionDialogFragment : DialogFragment() {
 
         setStyle(STYLE_NO_FRAME, R.style.DialogAnimationStyle)
     }
+    fun setDate(date: Date) {
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        _selectedDate.value = formatter.format(date)
+
+    }
 
     private fun setupRecyclerView() {
         adapter = FoodRecommendationAdapter(emptyList()) { foodItem ->
-
-                sviewModel.addFoodItemForDate(foodItem, mealType ?: "")
-                dismiss()
-                (targetFragment as? FoodSelectionListener)?.onFoodSelected(foodItem, mealType ?: "")
-            }
+            val dateString = _selectedDate.value
+            val currentDate = parseDate(dateString)
+            sviewModel.addFoodItemForDate(foodItem, currentDate, mealType ?: "")
+            dismiss()
+            (targetFragment as? FoodSelectionListener)?.onFoodSelected(foodItem, mealType ?: "")
+        }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@FoodSelectionDialogFragment.adapter
         }
     }
 
+
+    private fun parseDate(dateString: String?): Date? {
+        if (dateString.isNullOrEmpty()) return null
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return try {
+            formatter.parse(dateString)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            null
+        }
+    }
     private fun fetchFoodRecommendations(weight: Int, height: Int, age: Int, goal: String) {
         foodRecommendationHelper.getFoodRecommendations(weight, height, age, goal) { recommendations ->
             adapter.updateData(recommendations)

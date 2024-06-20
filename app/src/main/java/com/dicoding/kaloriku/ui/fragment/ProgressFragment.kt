@@ -20,6 +20,7 @@ import com.dicoding.kaloriku.ui.ViewModelFactory
 import com.dicoding.kaloriku.ui.auth.LoginActivity
 import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
 import com.dicoding.kaloriku.ui.auth.viewmodel.ProgressViewModel
+import com.dicoding.kaloriku.ui.helper.FoodRecommendationHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -39,6 +40,7 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
     private val progressViewModel by viewModels<ProgressViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
+    private lateinit var foodselectiondialogfragment: FoodSelectionDialogFragment
 
     private var _binding: FragmentProgressBinding? = null
     private val binding get() = _binding!!
@@ -160,9 +162,16 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
     }
 
     private fun showFoodSelectionDialog(mealType: String) {
-        val dialogFragment = FoodSelectionDialogFragment.newInstance(mealType)
-        dialogFragment.setTargetFragment(this, 0)
-        dialogFragment.show(parentFragmentManager, "FoodSelectionDialogFragment_$mealType")
+        foodselectiondialogfragment = FoodSelectionDialogFragment.newInstance(mealType)
+        foodselectiondialogfragment.setTargetFragment(this, 0)
+        foodselectiondialogfragment.show(parentFragmentManager, "FoodSelectionDialogFragment_$mealType")
+
+        viewModel.selectedDate.observe(viewLifecycleOwner) { date ->
+            val formattedDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(date)
+            binding.dateTextView.text = formattedDate
+            progressViewModel.setDate(date)
+            foodselectiondialogfragment.setDate(date)
+        }
     }
 
     override fun onFoodSelected(food: FoodItem, mealType: String) {
@@ -171,6 +180,7 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         viewModel.selectedDate.value?.let { date ->
             viewModel.loadFoodItemsForDate(date)
             Log.d("ROFLLLLLLLLLLLLLLLLL", "Initial selected date: $date")
+             // Initialize date here
         }
     }
 
@@ -221,7 +231,9 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         calendar.add(Calendar.DAY_OF_MONTH, offset)
         val newDate = calendar.time
         viewModel.setDate(newDate)
-
+        viewModel.selectedDate.value?.let { date ->
+            viewModel.loadFoodItemsForDate(date)
+            }
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         Log.d("ProgressFragment", "Selected date changed to: ${dateFormat.format(newDate)}")
     }
