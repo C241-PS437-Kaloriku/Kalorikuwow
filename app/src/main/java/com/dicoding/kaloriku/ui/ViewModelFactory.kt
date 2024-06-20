@@ -35,7 +35,7 @@ class ViewModelFactory(
                 ProfileViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(FoodSelectionViewModel::class.java) -> {
-                FoodSelectionViewModel(foodItemDao) as T // Create FoodSelectionViewModel with FoodItemDao
+                FoodSelectionViewModel(foodItemDao) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
