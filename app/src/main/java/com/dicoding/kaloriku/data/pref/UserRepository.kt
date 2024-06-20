@@ -49,6 +49,7 @@ class UserRepository private constructor(
         return apiService.getPhysicalData(token, userId)
     }
 
+
     suspend fun updatePhysicalData(request: UpdatePhysicalRequest, token: String): UpdatePhysicalResponse {
         return apiService.updatePhysical(token, request).body()
             ?: throw Exception("Failed to update physical data")

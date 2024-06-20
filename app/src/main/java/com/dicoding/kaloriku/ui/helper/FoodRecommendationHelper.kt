@@ -13,8 +13,8 @@ import retrofit2.Response
 class FoodRecommendationHelper(private val context: Context) {
 
     fun getFoodRecommendations(
-        weight: Float,
-        height: Float,
+        weight: Int,
+        height: Int,
         age: Int,
         goal: String,
         callback: (List<FoodItem>) -> Unit

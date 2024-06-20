@@ -9,6 +9,7 @@ import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
 import com.dicoding.kaloriku.ui.auth.viewmodel.FoodSelectionViewModel
 import com.dicoding.kaloriku.ui.auth.viewmodel.LoginViewModel
+import com.dicoding.kaloriku.ui.auth.viewmodel.ProgressViewModel
 import com.dicoding.kaloriku.ui.fragment.ProfileViewModel
 
 class ViewModelFactory(
@@ -22,8 +23,11 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(userRepository) as T
             }
+            modelClass.isAssignableFrom(ProgressViewModel::class.java) -> {
+                ProgressViewModel(userRepository) as T
+            }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(userRepository) as T
+                MainViewModel(userRepository, foodItemDao) as T
             }
             modelClass.isAssignableFrom(PhysicalDataViewModel::class.java) -> {
                 PhysicalDataViewModel(userRepository) as T

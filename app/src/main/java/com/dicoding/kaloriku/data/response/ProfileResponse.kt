@@ -13,7 +13,7 @@ data class UserProfile(
 	val weight: Int? = null,
 
 	@SerializedName("userId")
-	val userId: String? = null,
+	val userId: String,
 
 	@SerializedName("email")
 	val email: String? = null,
