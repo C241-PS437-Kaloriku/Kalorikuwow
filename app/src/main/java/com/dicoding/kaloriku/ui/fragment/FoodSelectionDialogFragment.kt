@@ -41,28 +41,21 @@ class FoodSelectionDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize DAO and helpers
         val context = requireContext()
         foodItemDao = AppDatabase.getDatabase(context).foodItemDao()
         foodRecommendationHelper = FoodRecommendationHelper(context)
 
-        // Initialize ViewModel using ViewModelFactory
         val factory = ViewModelFactory.getInstance(context)
         viewModel = ViewModelProvider(this, factory).get(FoodSelectionViewModel::class.java)
 
-        // Setup RecyclerView
         setupRecyclerView()
-
-        // Fetch food recommendations
         fetchFoodRecommendations()
-
-        // Observe database changes
         observeDatabaseChanges()
     }
 
     private fun setupRecyclerView() {
         adapter = FoodRecommendationAdapter(emptyList()) { foodItem ->
-            saveFoodItemToDatabase(foodItem) // Save selected food item to database
+            saveFoodItemToDatabase(foodItem)
             dismiss()
             (targetFragment as? FoodSelectionListener)?.onFoodSelected(foodItem)
         }
@@ -83,12 +76,10 @@ class FoodSelectionDialogFragment : DialogFragment() {
             proteins = foodItem.proteins
         )
 
-        // Use viewModelScope to launch coroutine for database insertion
         lifecycleScope.launch {
             viewModel.insertFoodItem(foodItemEntity)
             Log.d("FoodSelectionDialog", "Food item inserted: ${foodItem.name}")
 
-            // Fetch all food items from database to verify insertion
             val allFoodItems = foodItemDao.getAllFoodItems()
             Log.d("FoodSelectionDialog", "All food items in database: $allFoodItems")
         }

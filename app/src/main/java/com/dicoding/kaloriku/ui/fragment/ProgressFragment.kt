@@ -46,7 +46,6 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
 
         foodRecommendationHelper = FoodRecommendationHelper(requireContext())
 
-        // Observe user login status
         viewModel.getSession().observe(viewLifecycleOwner) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(activity, LoginActivity::class.java))
@@ -56,7 +55,6 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
             bmiViewModel.calculateBMI(user.userId)
         }
 
-        // Observe BMI result
         bmiViewModel.bmiResult.observe(viewLifecycleOwner) { bmiResponse ->
             bmiResponse?.let {
                 binding.bmiTextView.text = bmiResponse.bmi
@@ -65,7 +63,6 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         }
 
 
-        // Set click listeners for add buttons
         binding.addBreakfastButton.setOnClickListener {
             showFoodSelectionDialog("Breakfast")
         }
@@ -98,15 +95,11 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
     }
 
     private fun showFoodSelectionDialog(mealType: String) {
-        // Show food selection dialog fragment
         val dialogFragment = FoodSelectionDialogFragment.newInstance()
         dialogFragment.setTargetFragment(this, 0)
         dialogFragment.show(parentFragmentManager, "FoodSelectionDialogFragment_$mealType")
     }
-
-    // Handle food selection from dialog
     override fun onFoodSelected(food: FoodItem) {
-        // Handle food selection based on meal type
         when (food.name) {
             "Breakfast" -> binding.breakfastDescription.text = food.name
             "Lunch" -> binding.lunchDescription.text = food.name
