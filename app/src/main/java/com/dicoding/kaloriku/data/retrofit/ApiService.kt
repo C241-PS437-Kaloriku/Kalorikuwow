@@ -1,8 +1,8 @@
 package com.dicoding.kaloriku.data.retrofit
 
-import FoodRecommendationRequest
-import FoodRecommendationResponse
 import com.dicoding.kaloriku.data.response.BMIResponse
+import com.dicoding.kaloriku.data.response.FoodRecommendationRequest
+import com.dicoding.kaloriku.data.response.FoodRecommendationResponse
 import com.dicoding.kaloriku.data.response.LoginRequest
 import com.dicoding.kaloriku.data.response.LoginResponse
 import com.dicoding.kaloriku.data.response.PhotoProfileResponse
@@ -54,4 +54,9 @@ interface ApiService {
         @Part("userId") userIdPart: RequestBody,
         @Part profilePicture: MultipartBody.Part
     ): Response<PhotoProfileResponse>
+
+    @POST("predict")
+    fun getFoodRecommendations(
+        @Body request: FoodRecommendationRequest
+    ): Call<FoodRecommendationResponse>
 }

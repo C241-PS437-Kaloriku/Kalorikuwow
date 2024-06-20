@@ -1,11 +1,9 @@
 package com.dicoding.kaloriku.ui
 
-import AppDatabase
-import FoodItemDao
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
+import com.dicoding.kaloriku.data.dao.FoodItemDao
 import com.dicoding.kaloriku.data.di.Injection
 import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel

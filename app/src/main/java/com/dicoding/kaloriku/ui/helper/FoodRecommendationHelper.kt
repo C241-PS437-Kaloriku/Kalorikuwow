@@ -1,11 +1,11 @@
 package com.dicoding.kaloriku.ui.helper
 
-import FoodItem
-import FoodRecommendationRequest
-import FoodRecommendationResponse
 import android.content.Context
 import android.util.Log
-import com.dicoding.kaloriku.data.retrofit.RetrofitClient
+import com.dicoding.kaloriku.data.response.FoodItem
+import com.dicoding.kaloriku.data.response.FoodRecommendationRequest
+import com.dicoding.kaloriku.data.response.FoodRecommendationResponse
+import com.dicoding.kaloriku.data.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +20,9 @@ class FoodRecommendationHelper(private val context: Context) {
         callback: (List<FoodItem>) -> Unit
     ) {
         val request = FoodRecommendationRequest(weight, height, age, goal)
-        RetrofitClient.api.getFoodRecommendations(request).enqueue(object : Callback<FoodRecommendationResponse> {
+        val apiService = ApiConfig.getPredictService()
+
+        apiService.getFoodRecommendations(request).enqueue(object : Callback<FoodRecommendationResponse> {
             override fun onResponse(
                 call: Call<FoodRecommendationResponse>,
                 response: Response<FoodRecommendationResponse>

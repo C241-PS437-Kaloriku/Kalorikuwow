@@ -1,6 +1,5 @@
 package com.dicoding.kaloriku.ui.fragment
 
-import FoodItem
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +11,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.dicoding.kaloriku.data.response.FoodItem
 import com.dicoding.kaloriku.databinding.FragmentProgressBinding
 import com.dicoding.kaloriku.ui.MainViewModel
 import com.dicoding.kaloriku.ui.ViewModelFactory

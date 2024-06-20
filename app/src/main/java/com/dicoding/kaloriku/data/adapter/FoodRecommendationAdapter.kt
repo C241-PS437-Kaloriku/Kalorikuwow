@@ -1,7 +1,5 @@
-package com.dicoding.kaloriku.data.Adapter
+package com.dicoding.kaloriku.data.adapter
 
-import FoodItem
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.dicoding.kaloriku.R
+import com.dicoding.kaloriku.data.response.FoodItem
 
 class FoodRecommendationAdapter(
     private var foodItems: List<FoodItem>,
@@ -34,9 +32,18 @@ class FoodRecommendationAdapter(
     }
 
     inner class FoodRecommendationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val foodImageViews: ImageView = itemView.findViewById(R.id.foodImageViews)
+        private val foodImageView: ImageView = itemView.findViewById(R.id.foodImageViews)
         private val foodNameTextView: TextView = itemView.findViewById(R.id.foodNameTextView)
         private val caloriesTextView: TextView = itemView.findViewById(R.id.caloriesTextView)
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(foodItems[position])
+                }
+            }
+        }
 
         fun bind(foodItem: FoodItem) {
             foodNameTextView.text = foodItem.name
@@ -44,7 +51,7 @@ class FoodRecommendationAdapter(
 
             Glide.with(itemView)
                 .load(foodItem.image)
-                .into(foodImageViews)
+                .into(foodImageView)
         }
     }
-    }
+}

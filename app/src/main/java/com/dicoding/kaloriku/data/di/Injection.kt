@@ -1,7 +1,8 @@
 package com.dicoding.kaloriku.data.di
 
-import FoodItemDao
 import android.content.Context
+import com.dicoding.kaloriku.data.dao.AppDatabase
+import com.dicoding.kaloriku.data.dao.FoodItemDao
 import com.dicoding.kaloriku.data.pref.UserPreference
 import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.data.pref.dataStore
