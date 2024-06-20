@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.util.Log
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.dicoding.kaloriku.data.dao.FoodItemDao
 import com.dicoding.kaloriku.data.response.FoodItem
 import com.dicoding.kaloriku.data.response.FoodItemEntity
 import com.dicoding.kaloriku.databinding.DialogFoodSelectionBinding
+import com.dicoding.kaloriku.ui.MainViewModel
 import com.dicoding.kaloriku.ui.ViewModelFactory
 import com.dicoding.kaloriku.ui.auth.viewmodel.FoodSelectionViewModel
 import com.dicoding.kaloriku.ui.helper.FoodRecommendationHelper
@@ -30,7 +32,9 @@ class FoodSelectionDialogFragment : DialogFragment() {
 
     private var _binding: DialogFoodSelectionBinding? = null
     private val binding get() = _binding!!
-
+    private val sviewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
     private lateinit var foodItemDao: FoodItemDao
     private lateinit var adapter: FoodRecommendationAdapter
     private lateinit var foodRecommendationHelper: FoodRecommendationHelper
@@ -111,36 +115,14 @@ class FoodSelectionDialogFragment : DialogFragment() {
 
     private fun setupRecyclerView() {
         adapter = FoodRecommendationAdapter(emptyList()) { foodItem ->
-            saveFoodItemToDatabase(foodItem)
-            dismiss()
-            (targetFragment as? FoodSelectionListener)?.onFoodSelected(foodItem, mealType ?: "")
-        }
 
+                sviewModel.addFoodItemForDate(foodItem, mealType ?: "")
+                dismiss()
+                (targetFragment as? FoodSelectionListener)?.onFoodSelected(foodItem, mealType ?: "")
+            }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@FoodSelectionDialogFragment.adapter
-        }
-    }
-
-    private fun saveFoodItemToDatabase(foodItem: FoodItem) {
-        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val foodItemEntity = FoodItemEntity(
-            name = foodItem.name,
-            calories = foodItem.calories,
-            carbohydrate = foodItem.carbohydrate,
-            fat = foodItem.fat,
-            image = foodItem.image,
-            proteins = foodItem.proteins,
-            date = date,
-            mealType = mealType ?: ""
-        )
-
-        lifecycleScope.launch {
-            viewModel.insertFoodItem(foodItemEntity)
-            Log.d("FoodSelectionDialog", "Food item inserted: ${foodItem.name}")
-
-            val allFoodItems = foodItemDao.getAllFoodItems()
-            Log.d("FoodSelectionDialog", "All food items in database: $allFoodItems")
         }
     }
 

@@ -167,6 +167,11 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
 
     override fun onFoodSelected(food: FoodItem, mealType: String) {
         progressViewModel.addEatenFood(food.calories, food.carbohydrate, food.proteins, food.fat)
+
+        viewModel.selectedDate.value?.let { date ->
+            viewModel.loadFoodItemsForDate(date)
+            Log.d("ROFLLLLLLLLLLLLLLLLL", "Initial selected date: $date")
+        }
     }
 
     private fun observeProfileData() {
@@ -214,6 +219,10 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         val calendar = Calendar.getInstance()
         calendar.time = viewModel.selectedDate.value ?: Date()
         calendar.add(Calendar.DAY_OF_MONTH, offset)
-        viewModel.setDate(calendar.time)
+        val newDate = calendar.time
+        viewModel.setDate(newDate)
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        Log.d("ProgressFragment", "Selected date changed to: ${dateFormat.format(newDate)}")
     }
 }
