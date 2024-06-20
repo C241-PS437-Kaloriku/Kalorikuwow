@@ -2,6 +2,7 @@ package com.dicoding.kaloriku.data.di
 
 import android.content.Context
 import com.dicoding.kaloriku.data.dao.AppDatabase
+import com.dicoding.kaloriku.data.dao.DailyConsumptionDao
 import com.dicoding.kaloriku.data.dao.FoodItemDao
 import com.dicoding.kaloriku.data.pref.UserPreference
 import com.dicoding.kaloriku.data.pref.UserRepository
@@ -12,6 +13,10 @@ class Injection {
     companion object {
         fun provideFoodItemDao(context: Context): FoodItemDao {
             return AppDatabase.getDatabase(context).foodItemDao()
+        }
+
+        fun provideDailyConsumptionDao(context: Context): DailyConsumptionDao{
+            return AppDatabase.getDatabase(context).dailyConsumptionDao()
         }
 
         fun provideUserRepository(context: Context): UserRepository {

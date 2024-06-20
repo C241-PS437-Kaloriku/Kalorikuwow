@@ -2,9 +2,6 @@ package com.dicoding.kaloriku.data.response
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-
 data class FoodRecommendationRequest(
 	val weight: Int,
 	val height: Int,
@@ -23,6 +20,14 @@ data class FoodItemEntity(
 	val proteins: Double,
 	val date: String,
 	val mealType: String,
+)
+@Entity(tableName = "daily_consumption")
+data class DailyConsumption(
+	@PrimaryKey val date: String,
+	val calories: Double,
+	val carbs: Double,
+	val proteins: Double,
+	val fats: Double
 )
 
 data class FoodItem(

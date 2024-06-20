@@ -4,14 +4,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.dicoding.kaloriku.data.response.FoodItemEntity
+import com.dicoding.kaloriku.data.response.DailyConsumption
 
-@Database(entities = [FoodItemEntity::class], version = 2, exportSchema = false)
+@Database(entities = [FoodItemEntity::class, DailyConsumption::class],
+	version = 3,
+	exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
 	abstract fun foodItemDao(): FoodItemDao
+	abstract fun dailyConsumptionDao(): DailyConsumptionDao
 
 	companion object {
 		@Volatile

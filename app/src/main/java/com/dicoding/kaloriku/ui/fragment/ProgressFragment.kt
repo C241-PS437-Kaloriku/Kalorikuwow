@@ -13,21 +13,13 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.dicoding.kaloriku.data.response.FoodItem
-import com.dicoding.kaloriku.data.response.FoodRecommendationRequest
-import com.dicoding.kaloriku.data.response.FoodRecommendationResponse
-import com.dicoding.kaloriku.data.retrofit.ApiConfig
 import com.dicoding.kaloriku.databinding.FragmentProgressBinding
 import com.dicoding.kaloriku.ui.MainViewModel
 import com.dicoding.kaloriku.ui.ViewModelFactory
 import com.dicoding.kaloriku.ui.auth.LoginActivity
 import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
 import com.dicoding.kaloriku.ui.auth.viewmodel.ProgressViewModel
-import com.dicoding.kaloriku.ui.helper.FoodRecommendationHelper
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -48,7 +40,6 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         ViewModelFactory.getInstance(requireContext())
     }
 
-
     private var _binding: FragmentProgressBinding? = null
     private val binding get() = _binding!!
 
@@ -63,7 +54,6 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
-
 
         viewModel.getSession().observe(viewLifecycleOwner) { user ->
             if (!user.isLogin) {
@@ -82,6 +72,8 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         }
 
         observeProfileData()
+        observeProgressData()
+
         binding.previousDayButton.setOnClickListener {
             changeDate(-1)
         }
@@ -105,6 +97,7 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         viewModel.selectedDate.observe(viewLifecycleOwner) { date ->
             val formattedDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(date)
             binding.dateTextView.text = formattedDate
+            progressViewModel.setDate(date)
         }
 
         viewModel.breakfastItems.observe(viewLifecycleOwner) { items ->
@@ -119,24 +112,32 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
             binding.dinnerDescription.text = items.joinToString(", ") { it.name }
         }
 
-        // Observe eaten calories and update UI
+        // Observe remaining calories
+        progressViewModel.remainingCalories.observe(viewLifecycleOwner) { remaining ->
+            binding.tvSubtitle.text = remaining.toInt().toString()
+        }
+    }
+
+    private fun observeProgressData() {
         progressViewModel.eatenCalories.observe(viewLifecycleOwner) { calories ->
-            binding.Kcalss.text = calories.toString()
+            binding.Kcalss.text = calories.toInt().toString()
         }
 
-        // Observe eaten carbs and update UI
         progressViewModel.eatenCarbs.observe(viewLifecycleOwner) { carbs ->
-            binding.carbsText.text = "Carbs Eaten: $carbs"
+            binding.carbsText.text = "Carbs ${carbs.toInt()}g"
         }
 
-        // Observe eaten proteins and update UI
         progressViewModel.eatenProteins.observe(viewLifecycleOwner) { proteins ->
-            binding.proteinsText.text = "Proteins Eaten: $proteins"
+            binding.proteinsText.text = "Prots ${proteins.toInt()}g"
         }
 
-        // Observe eaten fats and update UI
         progressViewModel.eatenFats.observe(viewLifecycleOwner) { fats ->
-            binding.fatsText.text = "Fats Eaten: $fats"
+            binding.fatsText.text = "Fats ${fats.toInt()}g"
+        }
+
+        progressViewModel.dailyCaloriesNeeded.observe(viewLifecycleOwner) { calories ->
+            // You might want to use this value somewhere in your UI
+            Log.d("ProgressFragment", "Daily calories needed: $calories")
         }
     }
 
@@ -165,11 +166,7 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
     }
 
     override fun onFoodSelected(food: FoodItem, mealType: String) {
-        viewModel.addFoodItemForDate(food, mealType)
-
         progressViewModel.addEatenFood(food.calories, food.carbohydrate, food.proteins, food.fat)
-
-        updateUIWithEatenValues()
     }
 
     private fun observeProfileData() {
@@ -178,10 +175,9 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
                 val weight = userProfile.weight ?: 0
                 val height = userProfile.height ?: 0
                 val age = calculateAge(userProfile.birthdate)
-                val goal = userProfile.goal ?: ""
+                val goal = userProfile.goal
 
                 fetchDailyCaloriesNeeded(weight, height, age, goal)
-
             }
         }
         profileViewModel.loadPhysicalData()
@@ -210,8 +206,7 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
 
     private fun fetchDailyCaloriesNeeded(weight: Int, height: Int, age: Int, goal: String) {
         progressViewModel.getDailyCalories(weight, height, age, goal) { dailyCaloriesNeeded ->
-            Log.d("ProfileFragment", "Daily calories needed: $dailyCaloriesNeeded")
-            // Update UI or perform actions with dailyCaloriesNeeded
+            Log.d("ProgressFragment", "Daily calories needed: $dailyCaloriesNeeded")
         }
     }
 
@@ -220,20 +215,5 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         calendar.time = viewModel.selectedDate.value ?: Date()
         calendar.add(Calendar.DAY_OF_MONTH, offset)
         viewModel.setDate(calendar.time)
-    }
-
-    private fun updateUIWithEatenValues() {
-        progressViewModel.eatenCalories.value?.let { calories ->
-            binding.Kcalss.text = calories.toString()
-        }
-        progressViewModel.eatenCarbs.value?.let { carbs ->
-            binding.carbsText.text = "Carbs Eaten: $carbs"
-        }
-        progressViewModel.eatenProteins.value?.let { proteins ->
-            binding.proteinsText.text = "Proteins Eaten: $proteins"
-        }
-        progressViewModel.eatenFats.value?.let { fats ->
-            binding.fatsText.text = "Fats Eaten: $fats"
-        }
     }
 }

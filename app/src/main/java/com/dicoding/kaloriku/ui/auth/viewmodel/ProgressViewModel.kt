@@ -1,13 +1,10 @@
 package com.dicoding.kaloriku.ui.auth.viewmodel
 
-import android.provider.Settings
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.dicoding.kaloriku.data.dao.DailyConsumptionDao
 import com.dicoding.kaloriku.data.pref.UserRepository
-import com.dicoding.kaloriku.data.response.FoodItem
+import com.dicoding.kaloriku.data.response.DailyConsumption
 import com.dicoding.kaloriku.data.response.FoodRecommendationRequest
 import com.dicoding.kaloriku.data.response.FoodRecommendationResponse
 import com.dicoding.kaloriku.data.retrofit.ApiConfig
@@ -16,55 +13,65 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import java.util.*
 
-class ProgressViewModel(private val userRepository: UserRepository) : ViewModel() {
+class ProgressViewModel(
+    private val userRepository: UserRepository,
+    private val dailyConsumptionDao: DailyConsumptionDao
+) : ViewModel() {
 
-    private val _dailyCaloriesNeeded = MutableLiveData<Double>()
+    private val _selectedDate = MutableLiveData<String>()
+    val selectedDate: LiveData<String> = _selectedDate
+
+    private val _dailyConsumption = _selectedDate.switchMap { date ->
+        dailyConsumptionDao.getConsumptionForDate(date).asLiveData()
+    }
+
+    private val _dailyCaloriesNeeded = MutableLiveData(0.0)
     val dailyCaloriesNeeded: LiveData<Double> = _dailyCaloriesNeeded
 
-    private val _eatenCalories = MutableLiveData<Double>()
-    val eatenCalories: LiveData<Double> = _eatenCalories
+    val eatenCalories: LiveData<Double> = _dailyConsumption.map { it?.calories ?: 0.0 }
+    val eatenCarbs: LiveData<Double> = _dailyConsumption.map { it?.carbs ?: 0.0 }
+    val eatenProteins: LiveData<Double> = _dailyConsumption.map { it?.proteins ?: 0.0 }
+    val eatenFats: LiveData<Double> = _dailyConsumption.map { it?.fats ?: 0.0 }
 
-    private val _eatenCarbs = MutableLiveData<Double>()
-    val eatenCarbs: LiveData<Double> = _eatenCarbs
+    val remainingCalories = MediatorLiveData<Double>().apply {
+        addSource(_dailyCaloriesNeeded) { calculateRemainingCalories() }
+        addSource(eatenCalories) { calculateRemainingCalories() }
+    }
 
-    private val _eatenProteins = MutableLiveData<Double>()
-    val eatenProteins: LiveData<Double> = _eatenProteins
+    private fun calculateRemainingCalories() {
+        val daily = _dailyCaloriesNeeded.value ?: 0.0
+        val eaten = eatenCalories.value ?: 0.0
+        remainingCalories.value = daily - eaten
+    }
 
-    private val _eatenFats = MutableLiveData<Double>()
-    val eatenFats: LiveData<Double> = _eatenFats
+    fun setDate(date: Date) {
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        _selectedDate.value = formatter.format(date)
+    }
 
-    init {
-        // Initialize with default values
-        _dailyCaloriesNeeded.value = 0.0
-        _eatenCalories.value = 0.0
-        _eatenCarbs.value = 0.0
-        _eatenProteins.value = 0.0
-        _eatenFats.value = 0.0
+    fun addEatenFood(calories: Double, carbs: Double, proteins: Double, fats: Double) {
+        viewModelScope.launch {
+            val currentDate = _selectedDate.value ?: return@launch
+            val currentConsumption = _dailyConsumption.value ?: DailyConsumption(currentDate, 0.0, 0.0, 0.0, 0.0)
+            val updatedConsumption = currentConsumption.copy(
+                calories = currentConsumption.calories + calories,
+                carbs = currentConsumption.carbs + carbs,
+                proteins = currentConsumption.proteins + proteins,
+                fats = currentConsumption.fats + fats
+            )
+            dailyConsumptionDao.insertOrUpdate(updatedConsumption)
+        }
     }
 
     fun setDailyCaloriesNeeded(calories: Double) {
         _dailyCaloriesNeeded.value = calories
     }
 
-    fun addEatenFood(calories: Double, carbs: Double, proteins: Double, fats: Double) {
-        _eatenCalories.value = (_eatenCalories.value ?: 0.0) + calories
-        _eatenCarbs.value = (_eatenCarbs.value ?: 0.0) + carbs
-        _eatenProteins.value = (_eatenProteins.value ?: 0.0) + proteins
-        _eatenFats.value = (_eatenFats.value ?: 0.0) + fats
-    }
-
-    fun getDailyCalories(
-        weight: Int,
-        height: Int,
-        age: Int,
-        goal: String,
-        callback: (Float) -> Unit
-    ) {
-        val request = FoodRecommendationRequest(weight, height, age, goal) // Replace with your actual request object
-        val apiService =  ApiConfig.getPredictService()
+    fun getDailyCalories(weight: Int, height: Int, age: Int, goal: String, callback: (Float) -> Unit) {
+        val request = FoodRecommendationRequest(weight, height, age, goal)
+        val apiService = ApiConfig.getPredictService()
 
         apiService.getFoodRecommendations(request).enqueue(object : Callback<FoodRecommendationResponse> {
             override fun onResponse(
@@ -73,19 +80,18 @@ class ProgressViewModel(private val userRepository: UserRepository) : ViewModel(
             ) {
                 if (response.isSuccessful) {
                     val dailyCaloriesNeeded = response.body()?.daily_calories_needed ?: 0f
+                    setDailyCaloriesNeeded(dailyCaloriesNeeded.toDouble())
                     callback(dailyCaloriesNeeded)
                 } else {
-                    Log.e("ProfileFragment", "API call failed with response code: ${response.code()}")
+                    Log.e("ProgressViewModel", "API call failed with response code: ${response.code()}")
                     callback(0f)
                 }
             }
 
             override fun onFailure(call: Call<FoodRecommendationResponse>, t: Throwable) {
-                Log.e("ProfileFragment", "API call failed: ${t.message}")
+                Log.e("ProgressViewModel", "API call failed: ${t.message}")
                 callback(0f)
             }
         })
     }
-    }
-
-
+}

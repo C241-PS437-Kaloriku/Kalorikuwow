@@ -148,41 +148,41 @@
                 android:id="@+id/carbsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carbs Eaten: 0"
+                android:text="Carbs 0.0"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintHorizontal_bias="0.506"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.813" />
+                app:layout_constraintVertical_bias="0.951" />
 
             <TextView
                 android:id="@+id/proteinsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Proteins Eaten: 0"
+                android:text="Prots 0.0"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.648" />
+                app:layout_constraintVertical_bias="0.737" />
 
             <TextView
                 android:id="@+id/fatsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="208dp"
-                android:text="Fat Eaten: 0"
+                android:layout_marginStart="284dp"
+                android:text="Fats 0.0"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.979" />
+                app:layout_constraintVertical_bias="0.737" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

@@ -3,6 +3,7 @@ package com.dicoding.kaloriku.ui
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.dicoding.kaloriku.data.dao.DailyConsumptionDao
 import com.dicoding.kaloriku.data.dao.FoodItemDao
 import com.dicoding.kaloriku.data.di.Injection
 import com.dicoding.kaloriku.data.pref.UserRepository
@@ -14,7 +15,8 @@ import com.dicoding.kaloriku.ui.fragment.ProfileViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
-    private val foodItemDao: FoodItemDao
+    private val foodItemDao: FoodItemDao,
+    private val dailyConsumptionDao: DailyConsumptionDao
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -24,7 +26,7 @@ class ViewModelFactory(
                 LoginViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(ProgressViewModel::class.java) -> {
-                ProgressViewModel(userRepository) as T
+                ProgressViewModel(userRepository,dailyConsumptionDao) as T
             }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(userRepository, foodItemDao) as T
@@ -54,7 +56,8 @@ class ViewModelFactory(
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: ViewModelFactory(
                     Injection.provideUserRepository(context),
-                    Injection.provideFoodItemDao(context)
+                    Injection.provideFoodItemDao(context),
+                    Injection.provideDailyConsumptionDao(context)
                 ).also { INSTANCE = it }
             }
         }
