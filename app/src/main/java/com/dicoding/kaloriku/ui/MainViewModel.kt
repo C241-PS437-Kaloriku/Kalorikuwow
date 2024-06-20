@@ -1,5 +1,6 @@
 package com.dicoding.kaloriku.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,20 +40,26 @@ class MainViewModel(
     fun setDate(date: Date) {
         _selectedDate.value = date
         loadFoodItemsForDate(date)
+        Log.d("LMAOOOOOOOOOOO", "Initial selected date: $date")
     }
 
-    private fun loadFoodItemsForDate(date: Date) {
+    fun loadFoodItemsForDate(date: Date) {
         val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
         viewModelScope.launch {
             _breakfastItems.value = foodItemDao.getFoodItemsForMeal(formattedDate, "Breakfast").map { it.toFoodItem() }
             _lunchItems.value = foodItemDao.getFoodItemsForMeal(formattedDate, "Lunch").map { it.toFoodItem() }
             _dinnerItems.value = foodItemDao.getFoodItemsForMeal(formattedDate, "Dinner").map { it.toFoodItem() }
+
+            // Log the loaded date and formatted date
+            Log.d("MainViewModel", "Loading food items for date: $date, formattedDate: $formattedDate")
         }
     }
 
     fun addFoodItemForDate(food: FoodItem, mealType: String) {
         val date = _selectedDate.value ?: Date()
+
         val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+        Log.d("JIKAAAAAAA", "Selected date: $date")
         val foodItemEntity = FoodItemEntity(
             name = food.name,
             calories = food.calories,
