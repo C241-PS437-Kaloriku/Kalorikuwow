@@ -14,7 +14,6 @@ class Injection {
             return AppDatabase.getDatabase(context).foodItemDao()
         }
 
-        // Function to provide UserRepository
         fun provideUserRepository(context: Context): UserRepository {
             val pref = UserPreference.getInstance(context.dataStore)
             val apiService = ApiConfig.getApiService()

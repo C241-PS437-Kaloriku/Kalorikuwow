@@ -19,21 +19,8 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, ProgressFragment())
             .commit()
+        setupBottomNavigation()
 
-        foodRecommendationHelper = FoodRecommendationHelper(this)
-
-        val weight = 75f
-        val height = 175f
-        val age = 20
-        val goal = "maintain"
-
-        foodRecommendationHelper.getFoodRecommendations(weight, height, age, goal) { recommendations ->
-            recommendations.forEach { food ->
-                Log.d("FoodRecommendation", "Food: ${food.name}, Calories: ${food.calories}")
-
-                setupBottomNavigation()
-            }
-        }
     }
 
     private fun setupBottomNavigation() {

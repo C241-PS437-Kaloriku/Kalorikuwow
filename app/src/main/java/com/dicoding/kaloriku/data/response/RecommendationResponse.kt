@@ -2,10 +2,12 @@ package com.dicoding.kaloriku.data.response
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 data class FoodRecommendationRequest(
-	val weight: Float,
-	val height: Float,
+	val weight: Int,
+	val height: Int,
 	val age: Int,
 	val goal: String
 )
@@ -18,7 +20,9 @@ data class FoodItemEntity(
 	val carbohydrate: Double,
 	val fat: Double,
 	val image: String,
-	val proteins: Double
+	val proteins: Double,
+	val date: String,
+	val mealType: String,
 )
 
 data class FoodItem(
@@ -29,6 +33,7 @@ data class FoodItem(
 	val fat: Double,
 	val image: String,
 	val proteins: Double
+
 )
 
 data class FoodRecommendationResponse(

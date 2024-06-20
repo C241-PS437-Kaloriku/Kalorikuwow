@@ -80,7 +80,8 @@ dependencies {
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
-
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
     val room_version = "2.6.1"
     implementation ("androidx.room:room-runtime:$room_version")
     ksp ("androidx.room:room-compiler:$room_version")
