@@ -66,6 +66,10 @@
     <string name="camera">Camera</string>
     <string name="profile_lowercase">Profile</string>
     <string name="goal">Goal</string>
+    <string name="add_food">Add Food</string>
+    <string name="calories_0_kcal">Calories: 0 kcal</string>
+    <string name="food_name">Food Name</string>
+    <string name="food_image">Food Image</string>
     <string-array name="goal_options">
         <item>Maintain</item>
         <item>Increase</item>

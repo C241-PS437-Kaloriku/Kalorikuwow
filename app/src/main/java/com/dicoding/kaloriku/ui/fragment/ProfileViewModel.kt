@@ -132,20 +132,4 @@ class ProfileViewModel(
             else -> null
         }
     }
-
-
-    private fun UpdatePhysicalRequest.toUserProfile(): UserProfile {
-        return UserProfile(
-            userId = this.userId,
-            username = this.username,
-            email = "",
-            weight = this.weight,
-            height = this.height,
-            gender = this.gender,
-            birthdate = this.birthdate,
-            age = null,
-            profilePictureUrl = this.profilePictureUrl,
-            goal = this.goal
-        )
-    }
 }
