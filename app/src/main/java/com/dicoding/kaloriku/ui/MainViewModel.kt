@@ -55,8 +55,8 @@ class MainViewModel(
         }
     }
 
-    fun addFoodItemForDate(food: FoodItem, mealType: String) {
-        val date = _selectedDate.value ?: Date()
+    fun addFoodItemForDate(food: FoodItem, currentDate: Date?, mealType: String) {
+        val date = currentDate ?: Date()
 
         val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
         Log.d("JIKAAAAAAA", "Selected date: $date")
