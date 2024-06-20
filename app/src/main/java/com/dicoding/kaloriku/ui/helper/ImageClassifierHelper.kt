@@ -3,7 +3,7 @@ package com.dicoding.kaloriku.ui.helper
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
-import com.dicoding.kaloriku.ml.FoodDetectionModel2
+import com.dicoding.kaloriku.ml.FoodDetectionModel
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
@@ -14,11 +14,11 @@ import java.nio.ByteOrder
 
 class ImageClassifierHelper(private val context: Context) {
 
-    private var model: FoodDetectionModel2? = null
+    private var model: FoodDetectionModel? = null
 
     fun setupImageClassifier() {
         model?.close()
-        model = FoodDetectionModel2.newInstance(context)
+        model = FoodDetectionModel.newInstance(context)
     }
 
     fun classifyStaticImage(image: Bitmap): String {
@@ -68,7 +68,8 @@ class ImageClassifierHelper(private val context: Context) {
     }
 
     private fun processOutput(outputArray: FloatArray): String {
-        val labels = listOf("apel", "gudeg", "anggur", "capcay", "kacang", "kentang", "bakwan", "donat", "bakso", "ikan", "jeruk", "kopi", "air", "burger", "kerupuk", "durian", "es_krim", "batagor", "ayam", "cakwe", "crepes", "fu_yung_hai", "cumi", "bubur", "kebab")
+        val labels = listOf("air", "anggur", "apel", "ayam", "bakso", "bakwan", "batagor", "bubur", "burger", "cakwe", "capcay", "crepes", "cumi", "donat", "durian", "es_krim", "fu_yung_hai", "gudeg", "ikan", "jeruk", "kacang", "kebab", "kentang", "kerupuk", "kopi")
+
         val maxIndex = outputArray.indices.maxByOrNull { outputArray[it] } ?: -1
 
         return if (maxIndex != -1) {
