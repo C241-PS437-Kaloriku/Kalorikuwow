@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.kaloriku.R
@@ -53,15 +54,21 @@ class FoodRecommendationAdapter(
 
             addButton.setOnClickListener {
                 onItemClick(foodItem)
+                showToast(foodItem.name)
             }
 
             itemView.setOnClickListener {
                 onItemClick(foodItem)
+                showToast(foodItem.name)
             }
 
             Glide.with(itemView)
                 .load(foodItem.image)
                 .into(foodImageView)
+
+        }
+        private fun showToast(foodName: String) {
+            Toast.makeText(itemView.context, "$foodName has been added", Toast.LENGTH_SHORT).show()
         }
     }
 }
