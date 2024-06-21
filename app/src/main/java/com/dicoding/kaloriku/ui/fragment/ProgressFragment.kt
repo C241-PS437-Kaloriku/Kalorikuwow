@@ -130,7 +130,7 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         }
 
         progressViewModel.eatenProteins.observe(viewLifecycleOwner) { proteins ->
-            binding.proteinsText.text = "Prots ${proteins.toInt()}g"
+            binding.proteinsText.text = "Protein ${proteins.toInt()}g"
         }
 
         progressViewModel.eatenFats.observe(viewLifecycleOwner) { fats ->
