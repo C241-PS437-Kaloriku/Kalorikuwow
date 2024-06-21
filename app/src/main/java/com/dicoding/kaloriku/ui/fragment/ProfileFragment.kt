@@ -22,9 +22,10 @@ import com.bumptech.glide.Glide
 import com.dicoding.kaloriku.R
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.databinding.FragmentProfileBinding
-import com.dicoding.kaloriku.ui.MainViewModel
-import com.dicoding.kaloriku.ui.ViewModelFactory
+import com.dicoding.kaloriku.ui.viewmodelactivity.MainViewModel
+import com.dicoding.kaloriku.ui.viewmodelactivity.ViewModelFactory
 import com.dicoding.kaloriku.ui.auth.LoginActivity
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.ProfileViewModel
 import java.io.IOException
 import java.util.*
 

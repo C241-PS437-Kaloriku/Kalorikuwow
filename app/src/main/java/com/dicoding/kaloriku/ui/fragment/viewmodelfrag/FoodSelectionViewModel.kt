@@ -1,4 +1,4 @@
-package com.dicoding.kaloriku.ui.auth.viewmodel
+package com.dicoding.kaloriku.ui.fragment.viewmodelfrag
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

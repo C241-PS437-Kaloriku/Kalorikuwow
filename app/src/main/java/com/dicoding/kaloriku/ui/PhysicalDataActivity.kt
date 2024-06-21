@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.kaloriku.R
 import com.dicoding.kaloriku.data.response.UpdatePhysicalRequest
 import com.dicoding.kaloriku.databinding.ActivityPhysicalDataBinding
+import com.dicoding.kaloriku.ui.viewmodelactivity.PhysicalDataViewModel
+import com.dicoding.kaloriku.ui.viewmodelactivity.ViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
 import java.util.Calendar
 

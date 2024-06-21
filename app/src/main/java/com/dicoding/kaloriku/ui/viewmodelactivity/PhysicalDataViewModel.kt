@@ -1,4 +1,4 @@
-package com.dicoding.kaloriku.ui
+package com.dicoding.kaloriku.ui.viewmodelactivity
 
 import android.util.Log
 import androidx.lifecycle.LiveData

@@ -1,4 +1,4 @@
-package com.dicoding.kaloriku.ui.fragment
+package com.dicoding.kaloriku.ui.fragment.viewmodelfrag
 
 import android.util.Log
 import androidx.lifecycle.LiveData

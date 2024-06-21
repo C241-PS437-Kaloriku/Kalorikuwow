@@ -15,12 +15,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.dicoding.kaloriku.data.response.FoodItem
 import com.dicoding.kaloriku.databinding.FragmentProgressBinding
-import com.dicoding.kaloriku.ui.MainViewModel
-import com.dicoding.kaloriku.ui.ViewModelFactory
+import com.dicoding.kaloriku.ui.viewmodelactivity.MainViewModel
+import com.dicoding.kaloriku.ui.viewmodelactivity.ViewModelFactory
 import com.dicoding.kaloriku.ui.auth.LoginActivity
-import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
-import com.dicoding.kaloriku.ui.auth.viewmodel.ProgressViewModel
-import com.dicoding.kaloriku.ui.helper.FoodRecommendationHelper
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.BMIViewModel
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.ProgressViewModel
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.ProfileViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -114,7 +114,6 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
             binding.dinnerDescription.text = items.joinToString(", ") { it.name }
         }
 
-        // Observe remaining calories
         progressViewModel.remainingCalories.observe(viewLifecycleOwner) { remaining ->
             binding.tvSubtitle.text = remaining.toInt().toString()
         }
@@ -130,7 +129,7 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         }
 
         progressViewModel.eatenProteins.observe(viewLifecycleOwner) { proteins ->
-            binding.proteinsText.text = "Prots ${proteins.toInt()}g"
+            binding.proteinsText.text = "Protein ${proteins.toInt()}g"
         }
 
         progressViewModel.eatenFats.observe(viewLifecycleOwner) { fats ->
@@ -138,7 +137,6 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         }
 
         progressViewModel.dailyCaloriesNeeded.observe(viewLifecycleOwner) { calories ->
-            // You might want to use this value somewhere in your UI
             Log.d("ProgressFragment", "Daily calories needed: $calories")
         }
     }
@@ -180,7 +178,6 @@ class ProgressFragment : Fragment(), FoodSelectionDialogFragment.FoodSelectionLi
         viewModel.selectedDate.value?.let { date ->
             viewModel.loadFoodItemsForDate(date)
             Log.d("ROFLLLLLLLLLLLLLLLLL", "Initial selected date: $date")
-             // Initialize date here
         }
     }
 

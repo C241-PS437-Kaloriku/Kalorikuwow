@@ -1,4 +1,4 @@
-package com.dicoding.kaloriku.ui.auth.viewmodel
+package com.dicoding.kaloriku.ui.fragment.viewmodelfrag
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -9,8 +9,6 @@ import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.data.response.BMIResponse
 import com.dicoding.kaloriku.data.retrofit.ApiConfig
 import kotlinx.coroutines.launch
-
-
 
 class BMIViewModel(private val userRepository: UserRepository) : ViewModel() {
 
