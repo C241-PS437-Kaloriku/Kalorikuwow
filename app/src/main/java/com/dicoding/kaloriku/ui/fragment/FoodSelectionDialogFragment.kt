@@ -5,26 +5,23 @@ import android.provider.Settings.System.DATE_FORMAT
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.kaloriku.R
 import com.dicoding.kaloriku.data.dao.AppDatabase
 import com.dicoding.kaloriku.data.adapter.FoodRecommendationAdapter
 import com.dicoding.kaloriku.data.dao.FoodItemDao
 import com.dicoding.kaloriku.data.response.FoodItem
-import com.dicoding.kaloriku.data.response.FoodItemEntity
 import com.dicoding.kaloriku.databinding.DialogFoodSelectionBinding
-import com.dicoding.kaloriku.ui.MainViewModel
-import com.dicoding.kaloriku.ui.ViewModelFactory
-import com.dicoding.kaloriku.ui.auth.viewmodel.FoodSelectionViewModel
+import com.dicoding.kaloriku.ui.viewmodelactivity.MainViewModel
+import com.dicoding.kaloriku.ui.viewmodelactivity.ViewModelFactory
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.FoodSelectionViewModel
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.ProfileViewModel
 import com.dicoding.kaloriku.ui.helper.FoodRecommendationHelper
-import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -71,11 +68,9 @@ class FoodSelectionDialogFragment : DialogFragment() {
         foodItemDao = AppDatabase.getDatabase(context).foodItemDao()
         foodRecommendationHelper = FoodRecommendationHelper(context)
 
-        // Initialize ViewModel using ViewModelFactory
         val factory = ViewModelFactory.getInstance(context)
         viewModel = ViewModelProvider(this, factory).get(FoodSelectionViewModel::class.java)
 
-        // Initialize ProfileViewModel to fetch user's profile data
         profileViewModel = ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
         observeProfileData()
         setupRecyclerView()
@@ -114,7 +109,7 @@ class FoodSelectionDialogFragment : DialogFragment() {
                 e.printStackTrace()
             }
         }
-        return 0 // Return 0 if birthdate is null or if there's an exception
+        return 0
 
         setStyle(STYLE_NO_FRAME, R.style.DialogAnimationStyle)
     }

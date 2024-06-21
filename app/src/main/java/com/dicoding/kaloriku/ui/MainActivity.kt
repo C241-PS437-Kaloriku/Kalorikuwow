@@ -1,17 +1,14 @@
 package com.dicoding.kaloriku.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.kaloriku.R
 import com.dicoding.kaloriku.ui.fragment.DashboardFragment
 import com.dicoding.kaloriku.ui.fragment.ProfileFragment
 import com.dicoding.kaloriku.ui.fragment.ProgressFragment
-import com.dicoding.kaloriku.ui.helper.FoodRecommendationHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var foodRecommendationHelper: FoodRecommendationHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

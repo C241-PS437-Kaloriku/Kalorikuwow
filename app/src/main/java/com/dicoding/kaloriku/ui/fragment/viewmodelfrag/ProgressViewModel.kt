@@ -1,9 +1,8 @@
-package com.dicoding.kaloriku.ui.auth.viewmodel
+package com.dicoding.kaloriku.ui.fragment.viewmodelfrag
 
 import android.util.Log
 import androidx.lifecycle.*
 import com.dicoding.kaloriku.data.dao.DailyConsumptionDao
-import com.dicoding.kaloriku.data.pref.UserRepository
 import com.dicoding.kaloriku.data.response.DailyConsumption
 import com.dicoding.kaloriku.data.response.FoodRecommendationRequest
 import com.dicoding.kaloriku.data.response.FoodRecommendationResponse
@@ -16,7 +15,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ProgressViewModel(
-    private val userRepository: UserRepository,
     private val dailyConsumptionDao: DailyConsumptionDao
 ) : ViewModel() {
 

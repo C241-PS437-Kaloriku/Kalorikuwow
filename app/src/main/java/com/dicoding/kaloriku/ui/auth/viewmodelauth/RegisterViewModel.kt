@@ -1,4 +1,4 @@
-package com.dicoding.kaloriku.ui.auth.viewmodel
+package com.dicoding.kaloriku.ui.auth.viewmodelauth
 
 import android.util.Log
 import androidx.lifecycle.LiveData

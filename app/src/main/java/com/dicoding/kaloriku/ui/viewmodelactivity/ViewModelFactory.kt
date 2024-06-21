@@ -1,4 +1,4 @@
-package com.dicoding.kaloriku.ui
+package com.dicoding.kaloriku.ui.viewmodelactivity
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -7,11 +7,11 @@ import com.dicoding.kaloriku.data.dao.DailyConsumptionDao
 import com.dicoding.kaloriku.data.dao.FoodItemDao
 import com.dicoding.kaloriku.data.di.Injection
 import com.dicoding.kaloriku.data.pref.UserRepository
-import com.dicoding.kaloriku.ui.auth.viewmodel.BMIViewModel
-import com.dicoding.kaloriku.ui.auth.viewmodel.FoodSelectionViewModel
-import com.dicoding.kaloriku.ui.auth.viewmodel.LoginViewModel
-import com.dicoding.kaloriku.ui.auth.viewmodel.ProgressViewModel
-import com.dicoding.kaloriku.ui.fragment.ProfileViewModel
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.BMIViewModel
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.FoodSelectionViewModel
+import com.dicoding.kaloriku.ui.auth.viewmodelauth.LoginViewModel
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.ProgressViewModel
+import com.dicoding.kaloriku.ui.fragment.viewmodelfrag.ProfileViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
@@ -26,7 +26,7 @@ class ViewModelFactory(
                 LoginViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(ProgressViewModel::class.java) -> {
-                ProgressViewModel(userRepository,dailyConsumptionDao) as T
+                ProgressViewModel(dailyConsumptionDao) as T
             }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(userRepository, foodItemDao) as T

@@ -1,4 +1,4 @@
-package com.dicoding.kaloriku.ui
+package com.dicoding.kaloriku.ui.viewmodelactivity
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -50,7 +50,6 @@ class MainViewModel(
             _lunchItems.value = foodItemDao.getFoodItemsForMeal(formattedDate, "Lunch").map { it.toFoodItem() }
             _dinnerItems.value = foodItemDao.getFoodItemsForMeal(formattedDate, "Dinner").map { it.toFoodItem() }
 
-            // Log the loaded date and formatted date
             Log.d("MainViewModel", "Loading food items for date: $date, formattedDate: $formattedDate")
         }
     }

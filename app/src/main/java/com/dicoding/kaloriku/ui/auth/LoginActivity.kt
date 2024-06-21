@@ -17,8 +17,8 @@ import com.dicoding.kaloriku.data.pref.UserModel
 import com.dicoding.kaloriku.databinding.ActivityLoginBinding
 import com.dicoding.kaloriku.ui.MainActivity
 import com.dicoding.kaloriku.ui.PhysicalDataActivity
-import com.dicoding.kaloriku.ui.ViewModelFactory
-import com.dicoding.kaloriku.ui.auth.viewmodel.LoginViewModel
+import com.dicoding.kaloriku.ui.viewmodelactivity.ViewModelFactory
+import com.dicoding.kaloriku.ui.auth.viewmodelauth.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels {
