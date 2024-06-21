@@ -1,7 +1,7 @@
 # Mobile-Development
 Kaloriku is an application that provides food recommendations dan food recognation. This application is built using Kotlin programming language and Android Studio.
 
-![Login]()
+![Kaloriku](https://im.ge/i/Kaloriku.KpFedr)
 
 ## Features
 
